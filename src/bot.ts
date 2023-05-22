@@ -8,8 +8,10 @@ import type { Variant as TextEffectVariant } from "./textEffects";
 // Create a bot using the Telegram token
 const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
 
+
+
 // Handle the /yo command to greet the user
-bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
+bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`,{reply_to_message_id: ctx.msg.message_id,}));
 
 // Handle the /effect command to apply text effects using an inline keyboard
 type Effect = { code: TextEffectVariant; label: string };
@@ -153,8 +155,8 @@ for (const effect of allEffects) {
 
 // Handle the /about command
 const aboutUrlKeyboard = new InlineKeyboard().url(
-  "Host your own bot for free.",
-  "https://cyclic.sh/"
+  "Перейти на сайт PAR-RUS.RU",
+  "https://par-rus.ru/"
 );
 
 // Suggest commands in the menu
