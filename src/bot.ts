@@ -9,9 +9,23 @@ import type { Variant as TextEffectVariant } from "./textEffects";
 const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
 
 
-
+const admin_pass="неебивола"
+var admins=[];
 // Handle the /yo command to greet the user
 bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`,{reply_to_message_id: ctx.msg.message_id,}));
+
+//--------------hande commands----------------------------------
+bot.command("admin", (ctx) =>{
+    if(ctx.match===admin_pass){
+        ctx.reply("Права админа добавлены "+ ctx.from?.username,{reply_to_message_id: ctx.msg.message_id,});
+    }
+
+});
+//-------------------------------------------------------------
+
+
+
+
 
 // Handle the /effect command to apply text effects using an inline keyboard
 type Effect = { code: TextEffectVariant; label: string };
@@ -171,7 +185,7 @@ bot.api.setMyCommands([
 ]);
 
 // Handle all other messages and the /start command
-const introductionMessage = `Привет! я робот помощник PAR-RUS.RU.
+const introductionMessage = `Привет! Я робот помощник PAR-RUS.RU.
 Я знаю о выгодных предложениях и последних новостях в PAR-RUS.RU,
 также погу помочь с доставкой и показать адреса магазинов.
 
@@ -189,12 +203,13 @@ const replyWithIntro = (ctx: any) =>
 
 bot.command("start", replyWithIntro);
 
-
-
+//--------greeting 1st new member-----------------
 bot.on("msg:new_chat_members", async (ctx) =>{
   await  ctx.reply("@"+ ctx.msg.new_chat_members[0].first_name +", "+introductionMessage);
 });
-//handling text messages from chat, for example spam or frequintly asked questions
+//------------------------------------------------
+
+//---------------tracking key messages from users in chat-------------------------
 bot.on("message", async (ctx) =>{
   const msg=ctx.message;
 
@@ -211,7 +226,7 @@ bot.hears("ping", async (ctx) => {
     reply_to_message_id: ctx.msg.message_id,
   });
 });
-
+//----------------------------------------------------------------------------
 
 
 // Start the server
