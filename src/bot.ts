@@ -10,14 +10,22 @@ const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
 
 
 const admin_pass="неебивола"
-var admins=[];
+var admins=new Array();
 // Handle the /yo command to greet the user
-bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`,{reply_to_message_id: ctx.msg.message_id,}));
+bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`,{reply_to_message_id: ctx.msg.message_id,}));
 
 //--------------hande commands----------------------------------
-bot.command("admin", (ctx) =>{
+bot.command("admin", async (ctx) =>{ //grant admin rights
     if(ctx.match===admin_pass){
-        ctx.reply("Права админа добавлены "+ ctx.from?.username,{reply_to_message_id: ctx.msg.message_id,});
+        admins.push(ctx.from?.username);
+        await ctx.reply("Права админа добавлены "+ ctx.from?.username,{reply_to_message_id: ctx.msg.message_id,});
+    }
+
+});
+
+bot.command("showadmins", async (ctx) =>{ //show admins
+    if(admins.includes(ctx.from?.username)){
+        await ctx.reply(admins.toString(),{reply_to_message_id: ctx.msg.message_id,});
     }
 
 });
