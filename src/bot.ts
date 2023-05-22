@@ -11,29 +11,51 @@ const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
 
 const admin_pass="неебивола"
 var admins=new Array();
+var promotions=new Array();
 // Handle the /yo command to greet the user
 bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`,{reply_to_message_id: ctx.msg.message_id,}));
 
-//--------------hande commands----------------------------------
+//--------------hande admin commands----------------------------------
 bot.command("admin", async (ctx) =>{ //grant admin rights
     if(ctx.match===admin_pass){
         admins.push(ctx.from?.username);
         await ctx.reply("Права админа добавлены "+ ctx.from?.username,{reply_to_message_id: ctx.msg.message_id,});
     }
-
 });
 
 bot.command("showadmins", async (ctx) =>{ //show admins
     if(admins.includes(ctx.from?.username)){
         await ctx.reply(admins.toString(),{reply_to_message_id: ctx.msg.message_id,});
     }
-
 });
+
+bot.command("+", async (ctx) =>{ //add promotion
+    if(admins.includes(ctx.from?.username)){
+        promotions.push(ctx.match);
+        await ctx.reply("Акция добавлена",{reply_to_message_id: ctx.msg.message_id,});
+    }
+});
+
+bot.command("-", async (ctx) =>{ //add promotion
+    if(admins.includes(ctx.from?.username)){
+        promotions=arrayRemove(promotions, ctx.match);
+        await ctx.reply("Акция удалена",{reply_to_message_id: ctx.msg.message_id,});
+    }
+});
+
+function arrayRemove(arr:string[], value:string) {
+        return arr.filter(function(ele:string){
+              return ele != value;
+          });
+}
 //-------------------------------------------------------------
 
+//---------------------user commands---------------------------
+bot.command("promo", async (ctx) =>{ //grant admin rights
+        await ctx.reply(promotions.toString(),{reply_to_message_id: ctx.msg.message_id,});
+});
 
-
-
+//-------------------------------------------------------------
 
 // Handle the /effect command to apply text effects using an inline keyboard
 type Effect = { code: TextEffectVariant; label: string };
