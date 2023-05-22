@@ -188,7 +188,16 @@ const replyWithIntro = (ctx: any) =>
   });
 
 bot.command("start", replyWithIntro);
-bot.on("message", replyWithIntro);
+
+
+
+//handling text messages from chat, for example spam or frequintly asked questions
+bot.on("message", (ctx) =>{
+  if(ctx.message.text=="хуй")
+    ctx.reply("иди на хуй",{reply_to_message_id: ctx.msg.message_id,})
+
+
+});
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
