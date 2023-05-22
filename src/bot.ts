@@ -38,7 +38,7 @@ bot.command("add", async (ctx) =>{ //add promotion
 
 bot.command("del", async (ctx) =>{ //add promotion
     if(admins.includes(ctx.from?.username)){
-        promotions=promotions.splice(+ctx.match,1);
+        promotions.splice(+ctx.match,1);
         await ctx.reply("Акция удалена",{reply_to_message_id: ctx.msg.message_id,});
     }
 });
