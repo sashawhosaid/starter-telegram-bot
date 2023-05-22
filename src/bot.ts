@@ -2,6 +2,9 @@ import { Bot, InlineKeyboard, webhookCallback } from "grammy";
 import { chunk } from "lodash";
 import express from "express";
 import { applyTextEffect, Variant } from "./textEffects";
+const CyclicDB = require('@cyclic.sh/dynamodb');
+const db = CyclicDB(process.env.CYCLIC_DB);
+
 
 import type { Variant as TextEffectVariant } from "./textEffects";
 
@@ -14,6 +17,29 @@ var admins=new Array();
 var promotions=new Array();
 // Handle the /yo command to greet the user
 bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`,{reply_to_message_id: ctx.msg.message_id,}));
+
+//------------CyclicDB------------------------------------
+async function addNewAdmin(data:string){
+    let admindb = db.collection('admin');
+    let item = await admindb.get('admin');
+    await admindb.set('admins',item.push(data) );
+}
+
+async function addpromo(data:string){
+    let promodb = db.collection('promo');
+    let item = await promodb.get('promo');
+    await promodb.set('promo',item.push(data) );
+}
+
+async function getpromo(){
+    let promodb = db.collection('promo');
+    let item =await promodb.get('promo' );
+    return item;
+}
+//--------------------------------------------------------
+
+
+
 
 //--------------hande admin commands----------------------------------
 bot.command("admin", async (ctx) =>{ //grant admin rights
@@ -31,7 +57,8 @@ bot.command("showadmins", async (ctx) =>{ //show admins
 
 bot.command("add", async (ctx) =>{ //add promotion
     if(admins.includes(ctx.from?.username)){
-        promotions.push(ctx.match);
+        addpromo(ctx.match);
+        //promotions.push(ctx.match);
         await ctx.reply("Акция добавлена",{reply_to_message_id: ctx.msg.message_id,});
     }
 });
@@ -47,7 +74,9 @@ bot.command("del", async (ctx) =>{ //add promotion
 
 //---------------------user commands---------------------------
 bot.command("promo", async (ctx) =>{ //grant admin rights
-        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"),{reply_to_message_id: ctx.msg.message_id,});
+      //  await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"),{reply_to_message_id: ctx.msg.message_id,});
+      var promot=getpromo();
+      await ctx.reply(JSON.stringify(promot),{reply_to_message_id: ctx.msg.message_id,});
 });
 
 //-------------------------------------------------------------
