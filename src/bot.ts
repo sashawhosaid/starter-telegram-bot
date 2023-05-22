@@ -52,7 +52,7 @@ function arrayRemove(arr:string[], value:string) {
 
 //---------------------user commands---------------------------
 bot.command("promo", async (ctx) =>{ //grant admin rights
-        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n").toString,{reply_to_message_id: ctx.msg.message_id,});
+        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"),{reply_to_message_id: ctx.msg.message_id,});
 });
 
 //-------------------------------------------------------------
