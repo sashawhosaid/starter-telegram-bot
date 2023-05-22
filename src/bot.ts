@@ -192,12 +192,20 @@ bot.command("start", replyWithIntro);
 
 
 //handling text messages from chat, for example spam or frequintly asked questions
-bot.on("message", (ctx) =>{
+bot.on("message", async (ctx) =>{
   if(ctx.message.text=="хуй")
-    ctx.reply("иди на хуй",{reply_to_message_id: ctx.msg.message_id,})
-
-
+   await  ctx.reply("иди на хуй",{reply_to_message_id: ctx.msg.message_id,});
 });
+
+bot.hears("ping", async (ctx) => {
+  // `reply` is an alias for `sendMessage` in the same chat (see next section).
+  await ctx.reply("pong", {
+    // `reply_to_message_id` specifies the actual reply feature.
+    reply_to_message_id: ctx.msg.message_id,
+  });
+});
+
+
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
