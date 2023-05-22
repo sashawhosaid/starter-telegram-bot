@@ -191,10 +191,17 @@ bot.command("start", replyWithIntro);
 
 
 
+bot.on("msg:new_chat_members", async (ctx) =>{
+  await  ctx.reply("@"+ ctx.msg.new_chat_members +", "+introductionMessage);
+});
 //handling text messages from chat, for example spam or frequintly asked questions
 bot.on("message", async (ctx) =>{
-  if(ctx.message.text=="хуй")
-   await  ctx.reply("иди на хуй",{reply_to_message_id: ctx.msg.message_id,});
+  const msg=ctx.message;
+
+  if('text' in msg){
+    if(ctx.message.text=="хуй")
+     await  ctx.reply("иди на хуй",{reply_to_message_id: ctx.msg.message_id,});
+  }
 });
 
 bot.hears("ping", async (ctx) => {
