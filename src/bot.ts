@@ -29,14 +29,14 @@ bot.command("showadmins", async (ctx) =>{ //show admins
     }
 });
 
-bot.command("+", async (ctx) =>{ //add promotion
+bot.command("add", async (ctx) =>{ //add promotion
     if(admins.includes(ctx.from?.username)){
         promotions.push(ctx.match);
         await ctx.reply("Акция добавлена",{reply_to_message_id: ctx.msg.message_id,});
     }
 });
 
-bot.command("-", async (ctx) =>{ //add promotion
+bot.command("del", async (ctx) =>{ //add promotion
     if(admins.includes(ctx.from?.username)){
         promotions=arrayRemove(promotions, ctx.match);
         await ctx.reply("Акция удалена",{reply_to_message_id: ctx.msg.message_id,});
