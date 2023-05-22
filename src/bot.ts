@@ -159,20 +159,25 @@ const aboutUrlKeyboard = new InlineKeyboard().url(
 
 // Suggest commands in the menu
 bot.api.setMyCommands([
-  { command: "yo", description: "Be greeted by the bot" },
+  { command: "promo", description: "выгодные предложения" },
   {
-    command: "effect",
-    description: "Apply text effects on the text. (usage: /effect [text])",
+    command: "news",
+    description: "Новости и посдедние поступления",
   },
+  { command: "delivery", description: "Доставка" },
+  { command: "adress", description: "Адреса магазинов" },
 ]);
 
 // Handle all other messages and the /start command
-const introductionMessage = `Hello! I'm a Telegram bot.
-I'm powered by Cyclic, the next-generation serverless computing platform.
+const introductionMessage = `Привет! я робот помощник PAR-RUS.RU.
+Я знаю о выгодных предложениях и последних новостях в PAR-RUS.RU,
+также погу помочь с доставкой и показать адреса магазинов.
 
-<b>Commands</b>
-/yo - Be greeted by me
-/effect [text] - Show a keyboard to apply text effects to [text]`;
+<b>Команды</b>
+/promo - выгодные предложения
+/news - Новости и посдедние поступления
+/delivery - Доставка
+/adress - Адреса магазинов` ;
 
 const replyWithIntro = (ctx: any) =>
   ctx.reply(introductionMessage, {
