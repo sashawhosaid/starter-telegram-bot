@@ -175,7 +175,7 @@ const introductionMessage = `Привет! я робот помощник PAR-RU
 Я знаю о выгодных предложениях и последних новостях в PAR-RUS.RU,
 также погу помочь с доставкой и показать адреса магазинов.
 
-<b>Команды</b>
+Команды
 /promo - выгодные предложения
 /news - Новости и посдедние поступления
 /delivery - Доставка
@@ -192,7 +192,7 @@ bot.command("start", replyWithIntro);
 
 
 bot.on("msg:new_chat_members", async (ctx) =>{
-  await  ctx.reply("@"+ ctx.msg.new_chat_members +", "+introductionMessage);
+  await  ctx.reply("@"+ ctx.msg.new_chat_members[0].first_name +", "+introductionMessage);
 });
 //handling text messages from chat, for example spam or frequintly asked questions
 bot.on("message", async (ctx) =>{
