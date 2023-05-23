@@ -64,7 +64,7 @@ bot.command("add", async (ctx) =>{ //add promotion
         promotions.push(ctx.match);
         //----put to aws db---------------
         await s3.putObject({
-              Body: JSON.stringify({key:"value"}),
+              Body: JSON.stringify(promotions),
               Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
               Key: "promo.json",
           }).promise();
@@ -99,9 +99,8 @@ bot.command("promo", async (ctx) =>{ //grant admin rights
           server_reply=data.Body.toString('utf-8');
         }
       }).promise();
-
+      promotions=JSON.parse(server_reply)
       //----------------------------------------
-      if(ok)await ctx.reply("server's reply: "+server_reply);
       await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
 });
 //-------------------------------------------------------------
