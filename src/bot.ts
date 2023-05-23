@@ -113,13 +113,14 @@ bot.command("ads", async (ctx) =>{ //add promotion
     if(admins.includes(ctx.from?.username)){
 
         news=JSON.parse(await getdb(news_param));
-        var time=ctx.msg.date;
+        //var time=ctx.msg.date;
         //---convert unix time to normal time----
-        const milliseconds = time * 1000;
-        const dateObject = new Date(milliseconds);
-        const humanDateFormat = dateObject.toLocaleString();
+        //const milliseconds = time * 1000;
+        //const dateObject = new Date(milliseconds);
+        //const humanDateFormat = dateObject.toLocaleString();
 
-        news.unshift(humanDateFormat+":"+ctx.match);
+        //news.unshift(humanDateFormat+":"+ctx.match);
+        news.unshift(ctx.match);
         if(news.length>10)
           news.splice(-1);
         //-----------------------------------------
