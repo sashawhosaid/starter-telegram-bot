@@ -108,7 +108,7 @@ bot.command("del", async (ctx) =>{ //add promotion
     }
 });
 
-bot.command("databaseinit", async (ctx) =>{ //add promotion
+bot.command("initdatabase", async (ctx) =>{ //add promotion
     if(admins.includes(ctx.from?.username)){
 
         promotions.push("пусто");
@@ -179,7 +179,7 @@ bot.command("promo", async (ctx) =>{
 bot.command("news", async (ctx) =>{
 
       news=JSON.parse(await getdb(news_param));
-      await ctx.reply("Новости в PAR-RUS.RU: \n"+promotions.join("\n"));
+      await ctx.reply("Новости в PAR-RUS.RU: \n"+news.join("\n"));
 });
 //-------------------------------------------------------------
 
