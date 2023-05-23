@@ -22,23 +22,30 @@ var promotions=new Array();
 // Handle the /yo command to greet the user
 bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`,{reply_to_message_id: ctx.msg.message_id,}));
 
-//------------CyclicDB------------------------------------
-async function addNewAdmin(data:string){
-//    let admindb = db.collection('admin');
-//    let item = await admindb.get('admin');
-//    await admindb.set('admins',item.push(data) );
-}
 
-async function addpromo(data:string){
-//    let promodb = db.collection('promo');
-//    let item = await promodb.get('promo');
-//    await promodb.set('promo',item.push(data) );
-}
+//------------amazon s3 aws db------------------------------------
+var promokey="promo.json";
+//--------------retrieve data--------------------------
+async function getdb(key:string){
+  var ok=0;
+  var server_reply:string="void";
 
-async function getpromo(){
-//    let promodb = db.collection('promo');
-//    let item =await promodb.get('promo' );
-//    return item;
+  await s3.getObject({
+        Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+        Key: {key},
+  },function(err: Error,data:any){
+    if(err)console.log("errorrrrrrrrrrrrrrrrrrrrrrrrr: ", err, err.stack);
+    else {
+      server_reply=data.Body.toString('utf-8');
+      ok=1;
+    }
+  }).promise();
+
+  if(ok)
+    return server_reply;
+  else
+    return "Ошибка базы данных";
+
 }
 //--------------------------------------------------------
 
@@ -85,22 +92,8 @@ bot.command("del", async (ctx) =>{ //add promotion
 
 //---------------------user commands---------------------------
 bot.command("promo", async (ctx) =>{ //grant admin rights
-      var ok=0;
-      var server_reply:string="void";
-      //-----------getting from db---------------
-      await s3.getObject({
-            Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
-            Key: "promo.json",
-      },function(err: Error,data:any){
-        if(err)console.log("errorrrrrrrrrrrrrrrrrrrrrrrrr: ", err, err.stack);
-        else {
-          console.log("successss motherfucker: ", data.Body.toString('utf-8'));
-          ok=1;
-          server_reply=data.Body.toString('utf-8');
-        }
-      }).promise();
-      promotions=JSON.parse(server_reply)
-      //----------------------------------------
+
+      promotions=JSON.parse(await getdb(promokey));
       await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
 });
 //-------------------------------------------------------------
