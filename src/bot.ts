@@ -52,8 +52,7 @@ async function getdb(param:any){
 
 //----------retrieving data to the db---------------
 async function senddb(param:any, data:string){
-await s3.putObject({
-      Body: data,}+param,function(err:Error, data:any) {
+await s3.putObject(param,function(err:Error, data:any) {
                           if (err) return "Ошибка базы данных"; // an error occurred
                             else     "Данные успешно записаны";           // successful response
   }).promise();
