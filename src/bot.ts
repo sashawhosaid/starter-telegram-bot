@@ -91,12 +91,12 @@ bot.command("promo", async (ctx) =>{ //grant admin rights
       await s3.getObject({
             Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
             Key: "promo.json",
-      },function(err: Error,data:string){
+      },function(err: Error,data:any){
         if(err)console.log("errorrrrrrrrrrrrrrrrrrrrrrrrr: ", err, err.stack);
         else {
-          console.log("successss motherfucker: ", data);
+          console.log("successss motherfucker: ", data.Body.toString('utf-8'));
           ok=1;
-          server_reply=data;
+          server_reply=data.Body.toString('utf-8');
         }
       }).promise();
 
