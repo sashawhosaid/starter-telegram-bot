@@ -20,6 +20,7 @@ const admin_pass="неебивола"
 var admins=new Array();
 var promotions=new Array();
 var news=new Array();
+var delivery;
 // Handle the /yo command to greet the user
 bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
 
@@ -32,6 +33,15 @@ var promo_param={
 var news_param={
       Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
       Key: "news.json",
+};
+var admins_param={
+      Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+      Key: "admins.json",
+};
+
+var delivery_param={
+      Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+      Key: "delivery.json",
 };
 
 //--------------getting data from the db --------------------------
@@ -65,18 +75,49 @@ async function getdb(param:any){
 //--------------hande admin commands----------------------------------
 bot.command("admin", async (ctx) =>{ //grant admin rights
     if(ctx.match===admin_pass){
+        admins=JSON.parse(await getdb(admins_param));
         admins.push(ctx.from?.username);
+        //------------writing to db------------
+        await s3.putObject({
+              Body: JSON.stringify(promotions),
+              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Key: "admins.json",
+          }).promise();
+        //----------------------------------
         await ctx.reply("Права админа добавлены ");
     }
 });
 
 bot.command("showadmins", async (ctx) =>{ //show admins
+    admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
-        await ctx.reply(admins.toString());
+        await ctx.reply("Админы Robovaja: \n"+admins.join("\n"));
+    }
+});
+
+bot.command("deladmins", async (ctx) =>{ //show admins
+    admins=JSON.parse(await getdb(admins_param));
+    if(admins.includes(ctx.from?.username)){
+        admins=[];
+        await ctx.reply("список админов очищен");
+    }
+});
+
+bot.command("deliveryadress", async (ctx) =>{ //show admins
+    admins=JSON.parse(await getdb(admins_param));
+    if(admins.includes(ctx.from?.username)){
+      //------------writing to db------------
+      await s3.putObject({
+            Body: JSON.stringify(ctx.match),
+            Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+            Key: "delivery.json",
+        }).promise();
+      //----------------------------------
     }
 });
 
 bot.command("add", async (ctx) =>{ //add promotion
+    admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
 
         promotions=JSON.parse(await getdb(promo_param));
@@ -94,6 +135,7 @@ bot.command("add", async (ctx) =>{ //add promotion
 });
 
 bot.command("del", async (ctx) =>{ //add promotion
+    admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
         promotions=JSON.parse(await getdb(promo_param));
         promotions.splice(+ctx.match,1);
@@ -109,6 +151,7 @@ bot.command("del", async (ctx) =>{ //add promotion
 });
 
 bot.command("initdatabase", async (ctx) =>{ //add promotion
+    admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
 
         promotions.push("пусто");
@@ -138,11 +181,22 @@ bot.command("initdatabase", async (ctx) =>{ //add promotion
           }).promise();
         //----------------------------------
         await ctx.reply("База данных инициализирована");
+
+        delivery.push("пусто");
+        //------------writing to db------------
+        await s3.putObject({
+              Body: JSON.stringify(admins),
+              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Key: "admins.json",
+          }).promise();
+        //----------------------------------
+        await ctx.reply("База данных инициализирована");
     }
 });
 
 
 bot.command("ads", async (ctx) =>{ //add promotion
+    admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
 
         news=JSON.parse(await getdb(news_param));
@@ -180,6 +234,20 @@ bot.command("news", async (ctx) =>{
 
       news=JSON.parse(await getdb(news_param));
       await ctx.reply("Новости в PAR-RUS.RU: \n"+news.join("\n"));
+});
+
+bot.command("delivery", async (ctx) =>{
+
+      delivery=JSON.parse(await getdb(delivery_param));
+      await ctx.reply(delivery);
+});
+
+bot.command("adress", async (ctx) =>{
+
+      await ctx.reply("Адреса par-rus.ru \n"+
+                      "1. Центр: Большая Московская, 16, вход через арку налево \n"+
+                      "2. Доброе: Безыменского, 26а, вход в Озон \n"+
+                      "3. Тыщенка: Проспект Ленина, 62, вход в Верный, налево на цоколь \n");;
 });
 //-------------------------------------------------------------
 
@@ -367,11 +435,24 @@ bot.on("msg:new_chat_members", async (ctx) =>{
 
 //---------------tracking key messages from users in chat-------------------------
 bot.on("message", async (ctx) =>{
-  const msg=ctx.message;
+  var msg:any=ctx.message;
+  const price =  "сколько стоит";
+  const price1 =  "цена";
+  const price2 =  "почём";
+  const price3 =  "цену";
 
   if('text' in msg){
+      msg=ctx.message.text;
+      if (msg.texttoString().toLowerCase().includes(price)||
+          msg.texttoString().toLowerCase().includes(price1)||
+          msg.texttoString().toLowerCase().includes(price2)||
+          msg.texttoString().toLowerCase().includes(price3)) {
+      await ctx.reply("Извините, но цены на товары вы можете узнать придя в одни из наших магазинов");
+      }
+
+
     if(ctx.message.text=="хуй")
-     await  ctx.reply("иди на хуй",{reply_to_message_id: ctx.msg.message_id,});
+     await  ctx.reply("иди на хуй");
   }
 });
 
