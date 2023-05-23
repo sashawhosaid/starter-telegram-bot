@@ -152,7 +152,7 @@ bot.command("del", async (ctx) =>{ //add promotion
 
 bot.command("initdatabase", async (ctx) =>{ //add promotion
   //  admins=JSON.parse(await getdb(admins_param));
-    if(admins.includes(ctx.from?.username)){
+  //  if(admins.includes(ctx.from?.username)){
 
         promotions.push("пусто");
         //------------writing to db------------
@@ -190,7 +190,7 @@ bot.command("initdatabase", async (ctx) =>{ //add promotion
           }).promise();
         //----------------------------------
         await ctx.reply("База данных инициализирована");
-    }
+  //  }
 });
 
 
