@@ -444,11 +444,11 @@ bot.on("message", async (ctx) =>{
 
   if('text' in msg){
       msg=ctx.message.text;
-      if (msg.includes(price)||
+      if (msg.toLowerCase().includes(price)||
           msg.includes(price1)||
           msg.includes(price2)||
           msg.includes(price3)) {
-      await ctx.reply("Извините, но цены на товары вы можете узнать придя в одни из наших магазинов");
+      await ctx.reply("Извините, но цены на товары вы можете узнать придя в один из наших магазинов");
       }
 
 
