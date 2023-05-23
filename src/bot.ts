@@ -250,6 +250,22 @@ bot.command("adress", async (ctx) =>{
                       "2. Доброе: Безыменского, 26а, вход в Озон \n"+
                       "3. Тыщенка: Проспект Ленина, 62, вход в Верный, налево на цоколь \n");;
 });
+
+bot.command("menu", async (ctx) =>{
+  await ctx.reply("меню включено", {
+    "reply_markup": {
+    "keyboard": [["promo", "news"], ["delivery"], ["adress"]]
+    }
+  });
+});
+
+bot.command("hide", async (ctx) =>{
+  await ctx.reply("меню включено", {
+    "reply_markup": {
+      remove_keyboard: true
+    }
+  });
+});
 //-------------------------------------------------------------
 
 // Handle the /effect command to apply text effects using an inline keyboard
@@ -445,9 +461,9 @@ bot.on("message", async (ctx) =>{
   if('text' in msg){
       msg=ctx.message.text;
       if (msg.toLowerCase().includes(price)||
-          msg.includes(price1)||
-          msg.includes(price2)||
-          msg.includes(price3)) {
+          msg.toLowerCase().includes(price1)||
+          msg.toLowerCase().includes(price2)||
+          msg.toLowerCase().includes(price3)) {
       await ctx.reply("Извините, но цены на товары вы можете узнать придя в один из наших магазинов");
       }
 
