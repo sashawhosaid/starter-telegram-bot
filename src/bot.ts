@@ -32,7 +32,7 @@ async function getdb(key:string){
 
   await s3.getObject({
         Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
-        Key: key,
+        Key: "promo.json",
   },function(err: Error,data:any){
     if(err)console.log("errorrrrrrrrrrrrrrrrrrrrrrrrr: ", err, err.stack);
     else {
