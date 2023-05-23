@@ -20,7 +20,7 @@ const admin_pass="неебивола"
 var admins=new Array();
 var promotions=new Array();
 var news=new Array();
-var delivery:string;
+var delivery=new Array();
 // Handle the /yo command to greet the user
 bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
 
@@ -106,9 +106,11 @@ bot.command("deladmins", async (ctx) =>{ //show admins
 bot.command("deliveryadress", async (ctx) =>{ //show admins
     admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
+      delivery=[];
+      delivery.push(ctx.match);
       //------------writing to db------------
       await s3.putObject({
-            Body: JSON.stringify(ctx.match),
+            Body: JSON.stringify(delivery),
             Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
             Key: "delivery.json",
         }).promise();
@@ -181,7 +183,7 @@ bot.command("initdatabase", async (ctx) =>{ //add promotion
           }).promise();
         //----------------------------------
 
-        delivery="пусто";
+        delivery.push("пусто");
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(delivery),
@@ -238,7 +240,7 @@ bot.command("news", async (ctx) =>{
 bot.command("delivery", async (ctx) =>{
 
       delivery=JSON.parse(await getdb(delivery_param));
-      await ctx.reply(delivery);
+      await ctx.reply(delivery.join("\n"));
 });
 
 bot.command("adress", async (ctx) =>{
