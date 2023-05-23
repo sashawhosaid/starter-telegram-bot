@@ -64,7 +64,7 @@ bot.command("add", async (ctx) =>{ //add promotion
         promotions.push(ctx.match);
         //----put to aws db---------------
         await s3.putObject({
-              Body: JSON.stringify(promotions),
+              Body: JSON.stringify({key:"value"}),
               Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
               Key: "promo.json",
           }).promise();
@@ -91,7 +91,7 @@ bot.command("promo", async (ctx) =>{ //grant admin rights
             Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
             Key: "promo.json",
       }).promise();
-      //console.log("promo from db: ",JSON.parse(db_promo));
+      console.log("promo from db: ",JSON.parse(db_promo));
       //----------------------------------------
 
       await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"),{reply_to_message_id: ctx.msg.message_id,});
