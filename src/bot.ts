@@ -96,8 +96,8 @@ bot.command("del", async (ctx) =>{ //add promotion
 
 //---------------------user commands---------------------------
 bot.command("promo", async (ctx) =>{ //grant admin rights
-      var str:string=await getdb(promo_param);
-      //promotions=JSON.parse(await getdb(promo_param));
+      var result:string=await getdb(promo_param);
+      promotions=JSON.parse(result);
       await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"),{reply_to_message_id: ctx.msg.message_id,});
 });
 //-------------------------------------------------------------
