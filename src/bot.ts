@@ -4,7 +4,7 @@ import express from "express";
 import { applyTextEffect, Variant } from "./textEffects";
 //const CyclicDB = require('@cyclic.sh/dynamodb');
 //const db = CyclicDB(process.env.CYCLIC_DB);
-
+//var reply_to_user={reply_to_message_id: ctx.msg.message_id,};
 //----------amazon aws db-------------
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3();
@@ -21,7 +21,7 @@ var admins=new Array();
 var promotions=new Array();
 var news=new Array();
 // Handle the /yo command to greet the user
-bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`,{reply_to_message_id: ctx.msg.message_id,}));
+bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
 
 
 //------------amazon s3 aws db------------------------------------
@@ -66,13 +66,13 @@ async function getdb(param:any){
 bot.command("admin", async (ctx) =>{ //grant admin rights
     if(ctx.match===admin_pass){
         admins.push(ctx.from?.username);
-        await ctx.reply("Права админа добавлены "+ ctx.from?.username,{reply_to_message_id: ctx.msg.message_id,});
+        await ctx.reply("Права админа добавлены ");
     }
 });
 
 bot.command("showadmins", async (ctx) =>{ //show admins
     if(admins.includes(ctx.from?.username)){
-        await ctx.reply(admins.toString(),{reply_to_message_id: ctx.msg.message_id,});
+        await ctx.reply(admins.toString());
     }
 });
 
@@ -89,7 +89,7 @@ bot.command("add", async (ctx) =>{ //add promotion
           }).promise();
         //----------------------------------
 
-        await ctx.reply("Акция добавлена",{reply_to_message_id: ctx.msg.message_id,});
+        await ctx.reply("Акция добавлена");
     }
 });
 
@@ -104,7 +104,7 @@ bot.command("del", async (ctx) =>{ //add promotion
               Key: "promo.json",
           }).promise();
         //----------------------------------
-        await ctx.reply("Акция удалена",{reply_to_message_id: ctx.msg.message_id,});
+        await ctx.reply("Акция удалена");
     }
 });
 
@@ -142,7 +142,7 @@ bot.command("promo", async (ctx) =>{
       await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
 });
 
-bot.command("news", async (ctx) =>{ 
+bot.command("news", async (ctx) =>{
 
       news=JSON.parse(await getdb(news_param));
       await ctx.reply("Новости в PAR-RUS.RU: \n"+promotions.join("\n"));
