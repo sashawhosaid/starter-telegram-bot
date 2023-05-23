@@ -24,7 +24,7 @@ bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`,{repl
 
 
 //------------amazon s3 aws db------------------------------------
-var promokey="promo.json";
+var promokey:string="promo.json";
 //--------------retrieve data--------------------------
 async function getdb(key:string){
   var ok=0;
