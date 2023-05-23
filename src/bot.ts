@@ -111,25 +111,28 @@ bot.command("del", async (ctx) =>{ //add promotion
 bot.command("databaseinit", async (ctx) =>{ //add promotion
     if(admins.includes(ctx.from?.username)){
 
+        promotions.push("пусто");
         //------------writing to db------------
         await s3.putObject({
-              Body: JSON.stringify("пусто"),
+              Body: JSON.stringify(promotions),
               Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
               Key: "promo.json",
           }).promise();
         //----------------------------------
 
+        news.push("пусто");
         //------------writing to db------------
         await s3.putObject({
-              Body: JSON.stringify("пусто"),
+              Body: JSON.stringify(news),
               Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
               Key: "news.json",
           }).promise();
         //----------------------------------
 
+        admins.push("пусто");
         //------------writing to db------------
         await s3.putObject({
-              Body: JSON.stringify("пусто"),
+              Body: JSON.stringify(admins),
               Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
               Key: "admins.json",
           }).promise();
