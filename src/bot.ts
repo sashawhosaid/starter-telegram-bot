@@ -187,7 +187,7 @@ bot.command("initdatabase", async (ctx) =>{ //add promotion
         await s3.putObject({
               Body: JSON.stringify(admins),
               Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
-              Key: "admins.json",
+              Key: "delivery.json",
           }).promise();
         //----------------------------------
         await ctx.reply("База данных инициализирована");
