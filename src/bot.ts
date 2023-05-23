@@ -20,7 +20,7 @@ const admin_pass="неебивола"
 var admins=new Array();
 var promotions=new Array();
 var news=new Array();
-var delivery;
+var delivery:string;
 // Handle the /yo command to greet the user
 bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
 
@@ -79,7 +79,7 @@ bot.command("admin", async (ctx) =>{ //grant admin rights
         admins.push(ctx.from?.username);
         //------------writing to db------------
         await s3.putObject({
-              Body: JSON.stringify(promotions),
+              Body: JSON.stringify(admins),
               Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
               Key: "admins.json",
           }).promise();
@@ -181,10 +181,10 @@ bot.command("initdatabase", async (ctx) =>{ //add promotion
           }).promise();
         //----------------------------------
 
-        delivery.push("пусто");
+        delivery="пусто";
         //------------writing to db------------
         await s3.putObject({
-              Body: JSON.stringify(admins),
+              Body: JSON.stringify(delivery),
               Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
               Key: "delivery.json",
           }).promise();
