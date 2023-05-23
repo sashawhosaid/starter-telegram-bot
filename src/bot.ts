@@ -77,11 +77,10 @@ bot.command("showadmins", async (ctx) =>{ //show admins
 
 bot.command("add", async (ctx) =>{ //add promotion
     if(admins.includes(ctx.from?.username)){
-        var result:string;
         promotions.push(ctx.match);
-        await senddb(promo_param,JSON.stringify(promotions))
+        await senddb(promo_param,JSON.stringify(promotions));
 
-        await ctx.reply("Данные наверное записаны",{reply_to_message_id: ctx.msg.message_id,});
+        await ctx.reply("Данные наверное записаны");
     }
 });
 
@@ -96,8 +95,8 @@ bot.command("del", async (ctx) =>{ //add promotion
 
 //---------------------user commands---------------------------
 bot.command("promo", async (ctx) =>{ //grant admin rights
-      //promotions=JSON.parse(await getdb(promo_param));
-      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"),{reply_to_message_id: ctx.msg.message_id,});
+      promotions=JSON.parse(await getdb(promo_param));
+      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
 });
 //-------------------------------------------------------------
 
