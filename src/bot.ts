@@ -19,6 +19,7 @@ const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
 const admin_pass="неебивола"
 var admins=new Array();
 var promotions=new Array();
+var news=new Array();
 // Handle the /yo command to greet the user
 bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`,{reply_to_message_id: ctx.msg.message_id,}));
 
@@ -27,6 +28,10 @@ bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`,{repl
 var promo_param={
       Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
       Key: "promo.json",
+};
+var news_param={
+      Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+      Key: "news.json",
 };
 
 //--------------getting data from the db --------------------------
@@ -103,13 +108,44 @@ bot.command("del", async (ctx) =>{ //add promotion
     }
 });
 
+
+bot.command("ads", async (ctx) =>{ //add promotion
+    if(admins.includes(ctx.from?.username)){
+
+        news=JSON.parse(await getdb(news_param));
+        var time=ctx.msg.date;
+        //---convert unix time to normal time----
+        const milliseconds = time * 1000;
+        const dateObject = new Date(milliseconds);
+        const humanDateFormat = dateObject.toLocaleString();
+
+        news.unshift(humanDateFormat+":"+ctx.match);
+        if(news.length>10)
+          news.splice(-1);
+        //-----------------------------------------
+
+        //------------writing to db------------
+        await s3.putObject({
+              Body: JSON.stringify(news),
+              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Key: "news.json",
+          }).promise();
+        //----------------------------------
+    }
+});
 //-------------------------------------------------------------
 
 //---------------------user commands---------------------------
-bot.command("promo", async (ctx) =>{ //grant admin rights
+bot.command("promo", async (ctx) =>{
 
       promotions=JSON.parse(await getdb(promo_param));
       await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
+});
+
+bot.command("news", async (ctx) =>{ 
+
+      news=JSON.parse(await getdb(news_param));
+      await ctx.reply("Новости в PAR-RUS.RU: \n"+promotions.join("\n"));
 });
 //-------------------------------------------------------------
 
