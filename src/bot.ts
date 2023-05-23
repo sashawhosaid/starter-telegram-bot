@@ -93,7 +93,7 @@ bot.command("promo", async (ctx) =>{ //grant admin rights
       }).promise();
       promotions=JSON.parse(db_promo);
       //----------------------------------------
-      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions,{reply_to_message_id: ctx.msg.message_id,});
+      await ctx.reply(promotions[0],{reply_to_message_id: ctx.msg.message_id,});
       //await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"),{reply_to_message_id: ctx.msg.message_id,});
 });
 //-------------------------------------------------------------
