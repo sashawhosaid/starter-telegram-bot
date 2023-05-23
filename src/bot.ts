@@ -85,18 +85,23 @@ bot.command("del", async (ctx) =>{ //add promotion
 
 //---------------------user commands---------------------------
 bot.command("promo", async (ctx) =>{ //grant admin rights
-
+      var ok=0;
+      var server_reply:string="void";
       //-----------getting from db---------------
       await s3.getObject({
             Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
             Key: "promo.json",
-      },function(err: Error,data?:string){
+      },function(err: Error,data:string){
         if(err)console.log("errorrrrrrrrrrrrrrrrrrrrrrrrr: ", err, err.stack);
-        else console.log("successss motherfucker: ", data);
+        else {
+          console.log("successss motherfucker: ", data);
+          ok=1;
+          server_reply=data;
+        }
       }).promise();
 
       //----------------------------------------
-
+      if(ok)await ctx.reply("server's reply: "+server_reply);
       await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
 });
 //-------------------------------------------------------------
