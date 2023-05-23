@@ -29,7 +29,7 @@ var promo_param={
       Key: "promo.json",
 };
 
-//--------------retrieve data--------------------------
+//--------------getting data from the db --------------------------
 async function getdb(param:any){
   var ok=0;
   var server_reply:string="void";
@@ -50,6 +50,15 @@ async function getdb(param:any){
 }
 //--------------------------------------------------------
 
+//----------retrieving data to the db---------------
+async function senddb(param:any, data:string){
+await s3.putObject({
+      Body: data,}+param,function(err:Error, data:any) {
+                          if (err) return "Ошибка базы данных"; // an error occurred
+                            else     "Данные успешно записаны";           // successful response
+  }).promise();
+}
+//----------------------------------
 
 
 
@@ -69,16 +78,11 @@ bot.command("showadmins", async (ctx) =>{ //show admins
 
 bot.command("add", async (ctx) =>{ //add promotion
     if(admins.includes(ctx.from?.username)){
+        var result:string;
         promotions.push(ctx.match);
-        //----put to aws db---------------
-        await s3.putObject({
-              Body: JSON.stringify(promotions),
-              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
-              Key: "promo.json",
-          }).promise();
-        //----------------------------------
+        await senddb(promo_param,JSON.stringify(promotions))
 
-        await ctx.reply("Акция добавлена",{reply_to_message_id: ctx.msg.message_id,});
+        await ctx.reply("Данные наверное записаны",{reply_to_message_id: ctx.msg.message_id,});
     }
 });
 
@@ -95,7 +99,7 @@ bot.command("del", async (ctx) =>{ //add promotion
 bot.command("promo", async (ctx) =>{ //grant admin rights
 
       promotions=JSON.parse(await getdb(promo_param));
-      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
+      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"),{reply_to_message_id: ctx.msg.message_id,});
 });
 //-------------------------------------------------------------
 
