@@ -151,7 +151,7 @@ bot.command("del", async (ctx) =>{ //add promotion
 });
 
 bot.command("initdatabase", async (ctx) =>{ //add promotion
-    admins=JSON.parse(await getdb(admins_param));
+  //  admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
 
         promotions.push("пусто");
@@ -180,7 +180,6 @@ bot.command("initdatabase", async (ctx) =>{ //add promotion
               Key: "admins.json",
           }).promise();
         //----------------------------------
-        await ctx.reply("База данных инициализирована");
 
         delivery.push("пусто");
         //------------writing to db------------
