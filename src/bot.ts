@@ -91,13 +91,13 @@ bot.command("promo", async (ctx) =>{ //grant admin rights
             Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
             Key: "promo.json",
       },function(err: Error,data?:string){
-        if(err)console.log("errorrrrrrrrrrrrrrrrrrrrrrrrr: "err, err.stack);
-        else console.log("successss motherfucker: "data);
+        if(err)console.log("errorrrrrrrrrrrrrrrrrrrrrrrrr: ", err, err.stack);
+        else console.log("successss motherfucker: ", data);
       }).promise();
 
       //----------------------------------------
 
-      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"),{reply_to_message_id: ctx.msg.message_id,});
+      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
 });
 //-------------------------------------------------------------
 
