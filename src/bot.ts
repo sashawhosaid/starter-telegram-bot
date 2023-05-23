@@ -90,8 +90,8 @@ bot.command("promo", async (ctx) =>{ //grant admin rights
       await s3.getObject({
             Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
             Key: "promo.json",
-      },function(err: number,data?:string){
-        if(err)console.log(err);
+      },function(err: Error,data?:string){
+        if(err)console.log(err, err.stack);
         else console.log(data);
       }).promise();
 
