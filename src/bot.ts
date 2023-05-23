@@ -32,7 +32,7 @@ var promo_param={
 //--------------getting data from the db --------------------------
 async function getdb(param:any){
   var ok=0;
-  var server_reply:string="void";
+  var server_reply:string="Ошибка базы данных";
 
   await s3.getObject(param,function(err: Error,data:any){
     if(err)console.log("errorrrrrrrrrrrrrrrrrrrrrrrrr: ", err, err.stack);
@@ -42,21 +42,17 @@ async function getdb(param:any){
     }
   }).promise();
 
-  if(ok)
     return server_reply;
-  else
-    return "Ошибка базы данных";
+
 
 }
 //--------------------------------------------------------
 
+//async function senddb(param:any, data:string)
 //----------retrieving data to the db---------------
-async function senddb(param:any, data:string){
-await s3.putObject(param,function(err:Error, data:any) {
-                          if (err) return "Ошибка базы данных"; // an error occurred
-                            else     "Данные успешно записаны";           // successful response
-  }).promise();
-}
+//await s3.putObject({
+//      Body: JSON.stringify(promotions),}+param,
+//  }).promise();
 //----------------------------------
 
 
@@ -78,9 +74,15 @@ bot.command("showadmins", async (ctx) =>{ //show admins
 bot.command("add", async (ctx) =>{ //add promotion
     if(admins.includes(ctx.from?.username)){
         promotions.push(ctx.match);
-        await senddb(promo_param,JSON.stringify(promotions));
+        //await senddb(promo_param,JSON.stringify(promotions))
+        await s3.putObject({
+              Body: JSON.stringify(promotions),
+              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Key: "promo.json",
+          }).promise();
+        //----------------------------------
 
-        await ctx.reply("Данные наверное записаны");
+        await ctx.reply("Акция добавлена",{reply_to_message_id: ctx.msg.message_id,});
     }
 });
 
@@ -95,6 +97,7 @@ bot.command("del", async (ctx) =>{ //add promotion
 
 //---------------------user commands---------------------------
 bot.command("promo", async (ctx) =>{ //grant admin rights
+
       promotions=JSON.parse(await getdb(promo_param));
       await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
 });
