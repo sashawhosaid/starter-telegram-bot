@@ -24,16 +24,17 @@ bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`,{repl
 
 
 //------------amazon s3 aws db------------------------------------
-var promokey:string="promo.json";
+var promo_param={
+      Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+      Key: "promo.json",
+};
+
 //--------------retrieve data--------------------------
-async function getdb(key:string){
+async function getdb(param:any){
   var ok=0;
   var server_reply:string="void";
 
-  await s3.getObject({
-        Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
-        Key: "promo.json",
-  },function(err: Error,data:any){
+  await s3.getObject(param,function(err: Error,data:any){
     if(err)console.log("errorrrrrrrrrrrrrrrrrrrrrrrrr: ", err, err.stack);
     else {
       server_reply=data.Body.toString('utf-8');
@@ -93,7 +94,7 @@ bot.command("del", async (ctx) =>{ //add promotion
 //---------------------user commands---------------------------
 bot.command("promo", async (ctx) =>{ //grant admin rights
 
-      promotions=JSON.parse(await getdb(promokey));
+      promotions=JSON.parse(await getdb(promo_param));
       await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
 });
 //-------------------------------------------------------------
