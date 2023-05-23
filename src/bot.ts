@@ -60,9 +60,8 @@ bot.command("showadmins", async (ctx) =>{ //show admins
 });
 
 bot.command("add", async (ctx) =>{ //add promotion
-    promotions.push(ctx.match);
     if(admins.includes(ctx.from?.username)){
-
+        promotions.push(ctx.match);
         //----put to aws db---------------
         await s3.putObject({
               Body: JSON.stringify(promotions),
@@ -92,11 +91,10 @@ bot.command("promo", async (ctx) =>{ //grant admin rights
             Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
             Key: "promo.json",
       }).promise();
-      //promotions=JSON.parse(db_promo);
-      promotions=db_promo;
+      promotions=JSON.parse(db_promo);
       //----------------------------------------
-
-      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"),{reply_to_message_id: ctx.msg.message_id,});
+      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions,{reply_to_message_id: ctx.msg.message_id,});
+      //await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"),{reply_to_message_id: ctx.msg.message_id,});
 });
 //-------------------------------------------------------------
 
