@@ -2,9 +2,13 @@ import { Bot, InlineKeyboard, webhookCallback } from "grammy";
 import { chunk } from "lodash";
 import express from "express";
 import { applyTextEffect, Variant } from "./textEffects";
-const CyclicDB = require('@cyclic.sh/dynamodb');
-const db = CyclicDB(process.env.CYCLIC_DB);
+//const CyclicDB = require('@cyclic.sh/dynamodb');
+//const db = CyclicDB(process.env.CYCLIC_DB);
 
+//----------amazon aws db-------------
+const AWS = require("aws-sdk");
+const s3 = new AWS.S3();
+//------------------------------------
 
 import type { Variant as TextEffectVariant } from "./textEffects";
 
@@ -20,21 +24,21 @@ bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`,{repl
 
 //------------CyclicDB------------------------------------
 async function addNewAdmin(data:string){
-    let admindb = db.collection('admin');
-    let item = await admindb.get('admin');
-    await admindb.set('admins',item.push(data) );
+//    let admindb = db.collection('admin');
+//    let item = await admindb.get('admin');
+//    await admindb.set('admins',item.push(data) );
 }
 
 async function addpromo(data:string){
-    let promodb = db.collection('promo');
-    let item = await promodb.get('promo');
-    await promodb.set('promo',item.push(data) );
+//    let promodb = db.collection('promo');
+//    let item = await promodb.get('promo');
+//    await promodb.set('promo',item.push(data) );
 }
 
 async function getpromo(){
-    let promodb = db.collection('promo');
-    let item =await promodb.get('promo' );
-    return item;
+//    let promodb = db.collection('promo');
+//    let item =await promodb.get('promo' );
+//    return item;
 }
 //--------------------------------------------------------
 
@@ -56,9 +60,17 @@ bot.command("showadmins", async (ctx) =>{ //show admins
 });
 
 bot.command("add", async (ctx) =>{ //add promotion
+    promotions.push(ctx.match);
     if(admins.includes(ctx.from?.username)){
-        addpromo(ctx.match);
-        //promotions.push(ctx.match);
+
+        //----put to aws db---------------
+        await s3.putObject({
+              Body: JSON.stringify(promotions),
+              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Key: "promo.json",
+          }).promise();
+        //----------------------------------
+
         await ctx.reply("Акция добавлена",{reply_to_message_id: ctx.msg.message_id,});
     }
 });
@@ -74,11 +86,17 @@ bot.command("del", async (ctx) =>{ //add promotion
 
 //---------------------user commands---------------------------
 bot.command("promo", async (ctx) =>{ //grant admin rights
-      //  await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"),{reply_to_message_id: ctx.msg.message_id,});
-      var promot=getpromo();
-      await ctx.reply(JSON.stringify(promot),{reply_to_message_id: ctx.msg.message_id,});
-});
 
+      //-----------getting from db---------------
+      let db_promo = await s3.getObject({
+            Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+            Key: "promo.json",
+      }).promise();
+      promotions=JSON.parse(db_promo);
+      //----------------------------------------
+
+      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"),{reply_to_message_id: ctx.msg.message_id,});
+});
 //-------------------------------------------------------------
 
 // Handle the /effect command to apply text effects using an inline keyboard
