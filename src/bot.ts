@@ -108,19 +108,49 @@ bot.command("del", async (ctx) =>{ //add promotion
     }
 });
 
+bot.command("databaseinit", async (ctx) =>{ //add promotion
+    if(admins.includes(ctx.from?.username)){
+
+        //------------writing to db------------
+        await s3.putObject({
+              Body: JSON.stringify("пусто"),
+              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Key: "promo.json",
+          }).promise();
+        //----------------------------------
+
+        //------------writing to db------------
+        await s3.putObject({
+              Body: JSON.stringify("пусто"),
+              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Key: "news.json",
+          }).promise();
+        //----------------------------------
+
+        //------------writing to db------------
+        await s3.putObject({
+              Body: JSON.stringify("пусто"),
+              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Key: "admins.json",
+          }).promise();
+        //----------------------------------
+        await ctx.reply("База данных инициализирована");
+    }
+});
+
 
 bot.command("ads", async (ctx) =>{ //add promotion
     if(admins.includes(ctx.from?.username)){
 
         news=JSON.parse(await getdb(news_param));
-        //var time=ctx.msg.date;
+        var time=ctx.msg.date;
         //---convert unix time to normal time----
-        //const milliseconds = time * 1000;
-        //const dateObject = new Date(milliseconds);
-        //const humanDateFormat = dateObject.toLocaleString();
+        const milliseconds = time * 1000;
+        const dateObject = new Date(milliseconds);
+        const humanDateFormat = dateObject.toLocaleString();
 
-        //news.unshift(humanDateFormat+":"+ctx.match);
-        news.unshift(ctx.match);
+        news.unshift(humanDateFormat+":"+ctx.match);
+
         if(news.length>10)
           news.splice(-1);
         //-----------------------------------------
