@@ -236,7 +236,7 @@ bot.command("adminhelp", async (ctx) =>{ //add promotion
       Служебные команды:
       /showadmins - показать список админов
       /deladmins - очистить список админов
-      /initdatabase773829 - инициализировать базу данных (все данные удалятся), команда доступна без админских прав
+      /initdatabase773829 - инициализировать базу данных (все данные удалятся), команда доступна без админских пра
       ` ;
       await ctx.reply(helphint);
     }
@@ -500,7 +500,7 @@ bot.on("message", async (ctx) =>{
       if(ctx.message.text=="/Доставка"){
 
             delivery=JSON.parse(await getdb(delivery_param));
-            await ctx.reply(delivery.join("\n"));
+            await ctx.reply("Доставка:"+delivery.join("\n"));
             return;
       };
 
