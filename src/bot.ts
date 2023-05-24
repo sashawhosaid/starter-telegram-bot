@@ -231,7 +231,7 @@ bot.command("promo", async (ctx) =>{
       await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
 });
 
-bot.command("news", async (ctx) =>{
+bot.command("Новости", async (ctx) =>{
 
       news=JSON.parse(await getdb(news_param));
       await ctx.reply("Новости в PAR-RUS.RU: \n"+news.join("\n"));
@@ -254,7 +254,7 @@ bot.command("adress", async (ctx) =>{
 bot.command("menu", async (ctx) =>{
   await ctx.reply("меню включено", {
     "reply_markup": {
-    "keyboard": [["promo", "news"], ["delivery"], ["adress"]]
+    "keyboard": [["/promo", "/Новости"], ["/delivery"], ["/adress"]]
     }
   });
 });
