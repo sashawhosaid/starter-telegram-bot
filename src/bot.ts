@@ -254,13 +254,13 @@ bot.command("adress", async (ctx) =>{
 bot.command("menu", async (ctx) =>{
   await ctx.reply("меню включено", {
     "reply_markup": {
-    "keyboard": [["Приятная цена", "Новости"], ["Доставка"], ["Адреса"]]
+    "keyboard": [["/Приятная цена", "/Новости"], ["/Доставка"], ["/Адреса"]]
     }
   });
 });
 
 bot.command("hide", async (ctx) =>{
-  await ctx.reply("меню включено", {
+  await ctx.reply("меню выключено", {
     "reply_markup": {
       remove_keyboard: true
     }
@@ -459,6 +459,37 @@ bot.on("message", async (ctx) =>{
   const price3 =  "цену";
 
   if('text' in msg){
+
+      if(ctx.message.text=="/Приятная цена"){
+        promotions=JSON.parse(await getdb(promo_param));
+        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
+        return;
+      }
+
+      if(ctx.message.text=="/Новости"){
+
+            news=JSON.parse(await getdb(news_param));
+            await ctx.reply("Новости в PAR-RUS.RU: \n"+news.join("\n"));
+            return;
+      });
+
+      if(ctx.message.text=="/Доставка"){
+
+            delivery=JSON.parse(await getdb(delivery_param));
+            await ctx.reply(delivery.join("\n"));
+            return;
+      });
+
+      if(ctx.message.text=="/Адреса"){
+
+            await ctx.reply("Адреса par-rus.ru \n"+
+                            "1. Центр: Большая Московская, 16, вход через арку налево \n"+
+                            "2. Доброе: Безыменского, 26а, вход в Озон \n"+
+                            "3. Тыщенка: Проспект Ленина, 62, вход в Верный, налево на цоколь \n");
+            return;
+      });
+
+
       msg=ctx.message.text;
       if (msg.toLowerCase().includes(price)||
           msg.toLowerCase().includes(price1)||
@@ -467,9 +498,8 @@ bot.on("message", async (ctx) =>{
       await ctx.reply("Извините, но цены на товары вы можете узнать придя в один из наших магазинов");
       }
 
-
     if(ctx.message.text=="хуй")
-     await  ctx.reply("иди на хуй");
+     await  ctx.reply("с вами здесь и сейчас ваш бот Василий");
   }
 });
 
