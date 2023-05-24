@@ -471,14 +471,14 @@ bot.on("message", async (ctx) =>{
             news=JSON.parse(await getdb(news_param));
             await ctx.reply("Новости в PAR-RUS.RU: \n"+news.join("\n"));
             return;
-      });
+      };
 
       if(ctx.message.text=="/Доставка"){
 
             delivery=JSON.parse(await getdb(delivery_param));
             await ctx.reply(delivery.join("\n"));
             return;
-      });
+      };
 
       if(ctx.message.text=="/Адреса"){
 
@@ -487,7 +487,7 @@ bot.on("message", async (ctx) =>{
                             "2. Доброе: Безыменского, 26а, вход в Озон \n"+
                             "3. Тыщенка: Проспект Ленина, 62, вход в Верный, налево на цоколь \n");
             return;
-      });
+      };
 
 
       msg=ctx.message.text;
