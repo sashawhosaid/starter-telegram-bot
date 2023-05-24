@@ -27,20 +27,20 @@ bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
 
 //------------amazon s3 aws db------------------------------------
 var promo_param={
-      Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+      Bucket: "cyclic-fine-puce-dhole-yoke-eu-north-1",
       Key: "promo.json",
 };
 var news_param={
-      Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+      Bucket: "cyclic-fine-puce-dhole-yoke-eu-north-1",
       Key: "news.json",
 };
 var admins_param={
-      Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+      Bucket: "cyclic-fine-puce-dhole-yoke-eu-north-1",
       Key: "admins.json",
 };
 
 var delivery_param={
-      Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+      Bucket: "cyclic-fine-puce-dhole-yoke-eu-north-1",
       Key: "delivery.json",
 };
 
@@ -80,7 +80,7 @@ bot.command("admin", async (ctx) =>{ //grant admin rights
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(admins),
-              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Bucket: "cyclic-fine-puce-dhole-yoke-eu-north-1",
               Key: "admins.json",
           }).promise();
         //----------------------------------
@@ -111,7 +111,7 @@ bot.command("deliveryadress", async (ctx) =>{
       //------------writing to db------------
       await s3.putObject({
             Body: JSON.stringify(delivery),
-            Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+            Bucket: "cyclic-fine-puce-dhole-yoke-eu-north-1",
             Key: "delivery.json",
         }).promise();
       //----------------------------------
@@ -127,7 +127,7 @@ bot.command("add", async (ctx) =>{ //add promotion
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(promotions),
-              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Bucket: "cyclic-fine-puce-dhole-yoke-eu-north-1",
               Key: "promo.json",
           }).promise();
         //----------------------------------
@@ -144,7 +144,7 @@ bot.command("del", async (ctx) =>{
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(promotions),
-              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Bucket: "cyclic-fine-puce-dhole-yoke-eu-north-1",
               Key: "promo.json",
           }).promise();
         //----------------------------------
@@ -160,7 +160,7 @@ bot.command("initdatabase", async (ctx) =>{
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(promotions),
-              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Bucket: "cyclic-fine-puce-dhole-yoke-eu-north-1",
               Key: "promo.json",
           }).promise();
         //----------------------------------
@@ -169,7 +169,7 @@ bot.command("initdatabase", async (ctx) =>{
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(news),
-              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Bucket: "cyclic-fine-puce-dhole-yoke-eu-north-1",
               Key: "news.json",
           }).promise();
         //----------------------------------
@@ -178,7 +178,7 @@ bot.command("initdatabase", async (ctx) =>{
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(admins),
-              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Bucket: "cyclic-fine-puce-dhole-yoke-eu-north-1",
               Key: "admins.json",
           }).promise();
         //----------------------------------
@@ -187,7 +187,7 @@ bot.command("initdatabase", async (ctx) =>{
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(delivery),
-              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Bucket: "cyclic-fine-puce-dhole-yoke-eu-north-1",
               Key: "delivery.json",
           }).promise();
         //----------------------------------
@@ -217,7 +217,7 @@ bot.command("ads", async (ctx) =>{ //add promotion
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(news),
-              Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+              Bucket: "cyclic-fine-puce-dhole-yoke-eu-north-1",
               Key: "news.json",
           }).promise();
         //----------------------------------
