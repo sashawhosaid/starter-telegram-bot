@@ -536,5 +536,5 @@ if (process.env.NODE_ENV === "production") {
 } else {
   // Use Long Polling for development
   bot.start();
-  console.log(` Use Long Polling for development`);
+  console.log(` Use Long Polling for developmentsss`);
 }
