@@ -205,7 +205,7 @@ bot.command("ads", async (ctx) =>{ //add promotion
         //---convert unix time to normal time----
         const milliseconds = time * 1000;
         const dateObject = new Date(milliseconds);
-        const humanDateFormat = dateObject.toLocaleString();
+        const humanDateFormat = dateObject.toLocaleDateString();
 
         news.unshift(humanDateFormat+":"+ctx.match);
 
