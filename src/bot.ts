@@ -439,7 +439,10 @@ const replyWithIntro = (ctx: any) =>
     parse_mode: "HTML",
   });
 
-bot.command("start", replyWithIntro);
+bot.command("start", async (ctx) =>{
+  ctx.reply("started");
+  console.log("start command");
+});
 bot.command("help", replyWithIntro);
 
 //--------greeting 1st new member-----------------
