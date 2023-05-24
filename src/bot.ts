@@ -516,7 +516,7 @@ bot.hears("ping", async (ctx) => {
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
-  console.log('starting production conf');
+  console.log('starting production config');
   // Use Webhooks for the production server
   const app = express();
   app.use(express.json());
