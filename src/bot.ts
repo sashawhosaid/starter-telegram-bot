@@ -445,7 +445,8 @@ const replyWithIntro = (ctx: any) =>
     parse_mode: "HTML",
   });
 
-bot.command("start"||"help", replyWithIntro);
+bot.command("start", replyWithIntro);
+bot.command("help", replyWithIntro);
 
 //--------greeting 1st new member-----------------
 bot.on("msg:new_chat_members", async (ctx) =>{
