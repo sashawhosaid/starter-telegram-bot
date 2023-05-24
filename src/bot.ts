@@ -24,20 +24,20 @@ var delivery=new Array();
 
 //------------amazon s3  db------------------------------------
 var promo_param={
-      Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
+      Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
       Key: "promo.json",
 };
 var news_param={
-      Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
+      Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
       Key: "news.json",
 };
 var admins_param={
-      Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
+      Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
       Key: "admins.json",
 };
 
 var delivery_param={
-      Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
+      Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
       Key: "delivery.json",
 };
 
@@ -55,8 +55,6 @@ async function getdb(param:any){
   }).promise();
 
     return server_reply;
-
-
 }
 //--------------------------------------------------------
 
@@ -69,7 +67,7 @@ bot.command("admin", async (ctx) =>{ //grant admin rights
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(admins),
-              Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
+              Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
               Key: "admins.json",
           }).promise();
         //----------------------------------
@@ -100,7 +98,7 @@ bot.command("deliveryadress", async (ctx) =>{
       //------------writing to db------------
       await s3.putObject({
             Body: JSON.stringify(delivery),
-            Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
+            Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
             Key: "delivery.json",
         }).promise();
       //----------------------------------
@@ -116,7 +114,7 @@ bot.command("add", async (ctx) =>{ //add promotion
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(promotions),
-              Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
+              Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
               Key: "promo.json",
           }).promise();
         //----------------------------------
@@ -133,7 +131,7 @@ bot.command("del", async (ctx) =>{
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(promotions),
-              Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
+              Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
               Key: "promo.json",
           }).promise();
         //----------------------------------
@@ -149,7 +147,7 @@ bot.command("initdatabase", async (ctx) =>{
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(promotions),
-              Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
+              Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
               Key: "promo.json",
           }).promise();
         //----------------------------------
@@ -158,7 +156,7 @@ bot.command("initdatabase", async (ctx) =>{
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(news),
-              Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
+              Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
               Key: "news.json",
           }).promise();
         //----------------------------------
@@ -167,7 +165,7 @@ bot.command("initdatabase", async (ctx) =>{
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(admins),
-              Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
+              Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
               Key: "admins.json",
           }).promise();
         //----------------------------------
@@ -176,7 +174,7 @@ bot.command("initdatabase", async (ctx) =>{
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(delivery),
-              Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
+              Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
               Key: "delivery.json",
           }).promise();
         //----------------------------------
@@ -206,10 +204,43 @@ bot.command("ads", async (ctx) =>{ //add promotion
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(news),
-              Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
+              Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
               Key: "news.json",
           }).promise();
         //----------------------------------
+    }
+});
+
+
+bot.command("adminhelp", async (ctx) =>{ //add promotion
+    admins=JSON.parse(await getdb(admins_param));
+    if(admins.includes(ctx.from?.username)){
+      const helphint = `
+      Внимание!!!
+      *Все админские команды отправлять только в лс бота или админских чатах*
+
+      Админы бота могут:
+      1. Добавлять товары в список акионных товаров
+      2. Удалять товары и спика акционных товаров
+      3. Добавлять сообщение в ленту новостей, для этого обладая правами админа
+      необходимо отправить сообщение, поставив перед ним команду /ads
+      4. Устанавливать информацию о доставке
+
+      Команды вводятся в формате: /команда данные
+
+      Общие команды:
+      /admin неебивола - регистрация админа
+      /add текст - добавить выгодное предложение
+      /del число - убрать выгодное предложение, число-порядковый номер начиная с нуля
+      /ads текст - добавить текст после команды в ленту новостей
+      /deliveryadress текст - информация о доставке
+
+      Служебные команды:
+      /showadmins - показать список админов
+      /deladmins - очистить список админов
+      /initdatabase - инициализировать базу данных (все данные удалятся)
+      ` ;
+      await ctx.reply(helphint);
     }
 });
 //-------------------------------------------------------------
