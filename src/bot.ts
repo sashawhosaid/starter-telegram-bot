@@ -63,16 +63,8 @@ async function getdb(param:any){
 }
 //--------------------------------------------------------
 
-//async function senddb(param:any, data:string)
-//----------retrieving data to the db---------------
-//await s3.putObject({
-//      Body: JSON.stringify(promotions),}+param,
-//  }).promise();
-//----------------------------------
 
-
-
-//--------------hande admin commands----------------------------------
+//--------------handle admin commands----------------------------------
 bot.command("admin", async (ctx) =>{ //grant admin rights
     if(ctx.match===admin_pass){
         admins=JSON.parse(await getdb(admins_param));
@@ -524,6 +516,7 @@ bot.hears("ping", async (ctx) => {
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
+  console.log('starting production conf');
   // Use Webhooks for the production server
   const app = express();
   app.use(express.json());
