@@ -88,14 +88,14 @@ bot.command("admin", async (ctx) =>{ //grant admin rights
     }
 });
 
-bot.command("showadmins", async (ctx) =>{ //show admins
+bot.command("showadmins", async (ctx) =>{
     admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
         await ctx.reply("Админы Robovaja: \n"+admins.join("\n"));
     }
 });
 
-bot.command("deladmins", async (ctx) =>{ //show admins
+bot.command("deladmins", async (ctx) =>{
     admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
         admins=[];
@@ -103,7 +103,7 @@ bot.command("deladmins", async (ctx) =>{ //show admins
     }
 });
 
-bot.command("deliveryadress", async (ctx) =>{ //show admins
+bot.command("deliveryadress", async (ctx) =>{
     admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
       delivery=[];
@@ -136,7 +136,7 @@ bot.command("add", async (ctx) =>{ //add promotion
     }
 });
 
-bot.command("del", async (ctx) =>{ //add promotion
+bot.command("del", async (ctx) =>{
     admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
         promotions=JSON.parse(await getdb(promo_param));
@@ -152,7 +152,7 @@ bot.command("del", async (ctx) =>{ //add promotion
     }
 });
 
-bot.command("initdatabase", async (ctx) =>{ //add promotion
+bot.command("initdatabase", async (ctx) =>{
     admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
 
@@ -437,7 +437,8 @@ const introductionMessage = `Привет! Я робот помощник PAR-RU
 /promo - выгодные предложения
 /news - Новости и посдедние поступления
 /delivery - Доставка
-/adress - Адреса магазинов` ;
+/adress - Адреса магазинов
+/help - Справка о боте` ;
 
 const replyWithIntro = (ctx: any) =>
   ctx.reply(introductionMessage, {
@@ -445,7 +446,49 @@ const replyWithIntro = (ctx: any) =>
     parse_mode: "HTML",
   });
 
-bot.command("start", replyWithIntro);
+bot.command("start", async(ctx)=>{
+
+
+  promotions.push("пусто");
+  //------------writing to db------------
+  await s3.putObject({
+        Body: JSON.stringify(promotions),
+        Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+        Key: "promo.json",
+    }).promise();
+  //----------------------------------
+
+  news.push("пусто");
+  //------------writing to db------------
+  await s3.putObject({
+        Body: JSON.stringify(news),
+        Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+        Key: "news.json",
+    }).promise();
+  //----------------------------------
+
+  admins.push("пусто");
+  //------------writing to db------------
+  await s3.putObject({
+        Body: JSON.stringify(admins),
+        Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+        Key: "admins.json",
+    }).promise();
+  //----------------------------------
+
+  delivery.push("пусто");
+  //------------writing to db------------
+  await s3.putObject({
+        Body: JSON.stringify(delivery),
+        Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
+        Key: "delivery.json",
+    }).promise();
+  //----------------------------------
+  await ctx.reply("База данных инициализирована");
+
+
+
+});
 bot.command("help", replyWithIntro);
 
 //--------greeting 1st new member-----------------
