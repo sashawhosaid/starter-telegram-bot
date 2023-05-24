@@ -225,25 +225,25 @@ bot.command("ads", async (ctx) =>{ //add promotion
 //-------------------------------------------------------------
 
 //---------------------user commands---------------------------
-bot.command("Выгодные предложения", async (ctx) =>{
+bot.command("promo", async (ctx) =>{
 
       promotions=JSON.parse(await getdb(promo_param));
       await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
 });
 
-bot.command("Новости", async (ctx) =>{
+bot.command("news", async (ctx) =>{
 
       news=JSON.parse(await getdb(news_param));
       await ctx.reply("Новости в PAR-RUS.RU: \n"+news.join("\n"));
 });
 
-bot.command("Доставка", async (ctx) =>{
+bot.command("delivery", async (ctx) =>{
 
       delivery=JSON.parse(await getdb(delivery_param));
       await ctx.reply(delivery.join("\n"));
 });
 
-bot.command("Адреса", async (ctx) =>{
+bot.command("adress", async (ctx) =>{
 
       await ctx.reply("Адреса par-rus.ru \n"+
                       "1. Центр: Большая Московская, 16, вход через арку налево \n"+
@@ -254,7 +254,7 @@ bot.command("Адреса", async (ctx) =>{
 bot.command("menu", async (ctx) =>{
   await ctx.reply("меню включено", {
     "reply_markup": {
-    "keyboard": [["/Выгодные предложения", "/Новости"], ["/Доставка"], ["/Адреса"]]
+    "keyboard": [["Приятная цена", "Новости"], ["Доставка"], ["Адреса"]]
     }
   });
 });
