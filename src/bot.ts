@@ -203,9 +203,9 @@ bot.command("ads", async (ctx) =>{ //add promotion
         news=JSON.parse(await getdb(news_param));
         var time=ctx.msg.date;
         //---convert unix time to normal time----
-        const milliseconds = time * 1000;
-        const dateObject = new Date(milliseconds);
-        const humanDateFormat = dateObject.toLocaleDateString();
+        //const milliseconds = time * 1000;
+        const dateObject = new Date(time);
+        const humanDateFormat =dateObject.toLocaleDateString("ru-RU");
 
         news.unshift(humanDateFormat+":"+ctx.match);
 
