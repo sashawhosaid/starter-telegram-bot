@@ -156,7 +156,7 @@ bot.command("initdatabase", async (ctx) =>{
     admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
 
-        promotions.push("пусто");
+        promotions=[];
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(promotions),
@@ -165,7 +165,7 @@ bot.command("initdatabase", async (ctx) =>{
           }).promise();
         //----------------------------------
 
-        news.push("пусто");
+        news=[];
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(news),
@@ -174,7 +174,7 @@ bot.command("initdatabase", async (ctx) =>{
           }).promise();
         //----------------------------------
 
-        admins.push("пусто");
+        admins=[];
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(admins),
@@ -183,7 +183,7 @@ bot.command("initdatabase", async (ctx) =>{
           }).promise();
         //----------------------------------
 
-        delivery.push("пусто");
+        delivery=[];
         //------------writing to db------------
         await s3.putObject({
               Body: JSON.stringify(delivery),
@@ -446,49 +446,7 @@ const replyWithIntro = (ctx: any) =>
     parse_mode: "HTML",
   });
 
-bot.command("start", async(ctx)=>{
-
-
-  promotions.push("пусто");
-  //------------writing to db------------
-  await s3.putObject({
-        Body: JSON.stringify(promotions),
-        Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
-        Key: "promo.json",
-    }).promise();
-  //----------------------------------
-
-  news.push("пусто");
-  //------------writing to db------------
-  await s3.putObject({
-        Body: JSON.stringify(news),
-        Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
-        Key: "news.json",
-    }).promise();
-  //----------------------------------
-
-  admins.push("пусто");
-  //------------writing to db------------
-  await s3.putObject({
-        Body: JSON.stringify(admins),
-        Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
-        Key: "admins.json",
-    }).promise();
-  //----------------------------------
-
-  delivery.push("пусто");
-  //------------writing to db------------
-  await s3.putObject({
-        Body: JSON.stringify(delivery),
-        Bucket: "cyclic-zany-tan-alligator-tie-us-west-1",
-        Key: "delivery.json",
-    }).promise();
-  //----------------------------------
-  await ctx.reply("База данных инициализирована");
-
-
-
-});
+bot.command("start", replyWithIntro);
 bot.command("help", replyWithIntro);
 
 //--------greeting 1st new member-----------------
