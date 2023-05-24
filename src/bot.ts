@@ -416,10 +416,10 @@ const aboutUrlKeyboard = new InlineKeyboard().url(
 
 // Suggest commands in the menu
 bot.api.setMyCommands([
-  { command: "promo", description: "выгодные предложения" },
+  { command: "promo", description: "Выгодные предложения" },
   {
     command: "news",
-    description: "Новости и посдедние поступления",
+    description: "Новости и последние поступления",
   },
   { command: "delivery", description: "Доставка" },
   { command: "adress", description: "Адреса магазинов" },
