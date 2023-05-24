@@ -46,11 +46,8 @@ async function getdb(param:any){
   var ok=0;
   var server_reply:string="Ошибка базы данных";
 
-  await s3.getObject(param,async function(err: Error,data:any){
-    if(err){
-      await init_db();
-      console.log("errorrrrrrrrrrrrrrrrrrrrrrrrr: ", err, err.stack);
-    }
+  await s3.getObject(param,function(err: Error,data:any){
+    if(err)console.log("errorrrrrrrrrrrrrrrrrrrrrrrrr: ", err, err.stack);
     else {
       server_reply=data.Body.toString('utf-8');
       ok=1;
@@ -145,49 +142,47 @@ bot.command("del", async (ctx) =>{
 bot.command("initdatabase", async (ctx) =>{
     admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
-        await init_db();
+
+        promotions=[];
+        //------------writing to db------------
+        await s3.putObject({
+              Body: JSON.stringify(promotions),
+              Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
+              Key: "promo.json",
+          }).promise();
+        //----------------------------------
+
+        news=[];
+        //------------writing to db------------
+        await s3.putObject({
+              Body: JSON.stringify(news),
+              Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
+              Key: "news.json",
+          }).promise();
+        //----------------------------------
+
+        admins=[];
+        //------------writing to db------------
+        await s3.putObject({
+              Body: JSON.stringify(admins),
+              Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
+              Key: "admins.json",
+          }).promise();
+        //----------------------------------
+
+        delivery=[];
+        //------------writing to db------------
+        await s3.putObject({
+              Body: JSON.stringify(delivery),
+              Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
+              Key: "delivery.json",
+          }).promise();
+        //----------------------------------
         await ctx.reply("База данных инициализирована");
     }
 });
 
-async function init_db(){
-  promotions=[];
-  //------------writing to db------------
-  await s3.putObject({
-        Body: JSON.stringify(promotions),
-        Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
-        Key: "promo.json",
-    }).promise();
-  //----------------------------------
 
-  news=[];
-  //------------writing to db------------
-  await s3.putObject({
-        Body: JSON.stringify(news),
-        Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
-        Key: "news.json",
-    }).promise();
-  //----------------------------------
-
-  admins=[];
-  //------------writing to db------------
-  await s3.putObject({
-        Body: JSON.stringify(admins),
-        Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
-        Key: "admins.json",
-    }).promise();
-  //----------------------------------
-
-  delivery=[];
-  //------------writing to db------------
-  await s3.putObject({
-        Body: JSON.stringify(delivery),
-        Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
-        Key: "delivery.json",
-    }).promise();
-  //----------------------------------
-
-}
 
 bot.command("ads", async (ctx) =>{ //add promotion
     admins=JSON.parse(await getdb(admins_param));
@@ -556,8 +551,57 @@ if (process.env.NODE_ENV === "production") {
   app.use(webhookCallback(bot, "express"));
 
   const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
+  app.listen(PORT, async () => {
     console.log(`Bot listening on port ${PORT}`);
+
+
+
+
+    promotions=[];
+    //------------writing to db------------
+    await s3.putObject({
+          Body: JSON.stringify(promotions),
+          Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
+          Key: "promo.json",
+      }).promise();
+    //----------------------------------
+
+    news=[];
+    //------------writing to db------------
+    await s3.putObject({
+          Body: JSON.stringify(news),
+          Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
+          Key: "news.json",
+      }).promise();
+    //----------------------------------
+
+    admins=[];
+    //------------writing to db------------
+    await s3.putObject({
+          Body: JSON.stringify(admins),
+          Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
+          Key: "admins.json",
+      }).promise();
+    //----------------------------------
+
+    delivery=[];
+    //------------writing to db------------
+    await s3.putObject({
+          Body: JSON.stringify(delivery),
+          Bucket: "cyclic-tan-nervous-sheep-eu-north-1",
+          Key: "delivery.json",
+      }).promise();
+    //----------------------------------
+
+
+
+
+
+
+
+
+
+
   });
 } else {
   // Use Long Polling for development
