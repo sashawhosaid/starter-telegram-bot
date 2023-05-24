@@ -410,8 +410,8 @@ for (const effect of allEffects) {
 
 // Handle the /about command
 const aboutUrlKeyboard = new InlineKeyboard().url(
-  "Перейти на сайт PAR-RUS.RU",
-  "https://par-rus.ru/"
+  "Прочитайте правила нашего чата",
+  "https://t.me/parrus_ru/3285"
 );
 
 // Suggest commands in the menu
@@ -423,12 +423,15 @@ bot.api.setMyCommands([
   },
   { command: "delivery", description: "Доставка" },
   { command: "adress", description: "Адреса магазинов" },
+  { command: "help", description: "Справка о боте" },
 ]);
 
 // Handle all other messages and the /start command
 const introductionMessage = `Привет! Я робот помощник PAR-RUS.RU.
 Я знаю о выгодных предложениях и последних новостях в PAR-RUS.RU,
 также погу помочь с доставкой и показать адреса магазинов.
+Чтобы показать меню напишите /menu
+чтобы убрать меню напишите /hide
 
 Команды
 /promo - выгодные предложения
@@ -442,7 +445,7 @@ const replyWithIntro = (ctx: any) =>
     parse_mode: "HTML",
   });
 
-bot.command("start", replyWithIntro);
+bot.command("start"||"help", replyWithIntro);
 
 //--------greeting 1st new member-----------------
 bot.on("msg:new_chat_members", async (ctx) =>{
@@ -495,7 +498,10 @@ bot.on("message", async (ctx) =>{
           msg.toLowerCase().includes(price1)||
           msg.toLowerCase().includes(price2)||
           msg.toLowerCase().includes(price3)) {
-      await ctx.reply("Извините, но цены на товары вы можете узнать придя в один из наших магазинов");
+      await ctx.reply("Извините, но цены на товары вы можете узнать придя в один из наших магазинов",{
+        reply_markup: aboutUrlKeyboard,
+        parse_mode: "HTML",
+      });
       }
 
     if(ctx.message.text=="хуй")
