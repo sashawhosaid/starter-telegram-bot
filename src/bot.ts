@@ -46,13 +46,13 @@ async function getdb(param:any){
   var ok=0;
   var server_reply:string="Ошибка базы данных";
 
-  await s3.getObject(param,function(err: Error,data:any){
-    if(err)console.log("errorrrrrrrrrrrrrrrrrrrrrrrrr: ", err, err.stack);
-    else {
-      server_reply=data.Body.toString('utf-8');
-      ok=1;
-    }
-  }).promise();
+//  await s3.getObject(param,function(err: Error,data:any){
+//    if(err)console.log("errorrrrrrrrrrrrrrrrrrrrrrrrr: ", err, err.stack);
+//    else {
+//      server_reply=data.Body.toString('utf-8');
+//      ok=1;
+//    }
+//  }).promise();
 
     return server_reply;
 
