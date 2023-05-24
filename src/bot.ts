@@ -21,11 +21,8 @@ var admins=new Array();
 var promotions=new Array();
 var news=new Array();
 var delivery=new Array();
-// Handle the /yo command to greet the user
-bot.command("[:datatype]yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
 
-
-//------------amazon s3 aws db------------------------------------
+//------------amazon s3  db------------------------------------
 var promo_param={
       Bucket: "cyclic-fancy-fawn-gear-eu-north-1",
       Key: "promo.json",
