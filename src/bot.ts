@@ -240,19 +240,41 @@ bot.command("adminhelp", async (ctx) =>{ //add promotion
       await ctx.reply(helphint);
     }
 });
+
+bot.command("menu", async (ctx) =>{
+  admins=JSON.parse(await getdb(admins_param));
+  if(admins.includes(ctx.from?.username)){
+        await ctx.reply("меню включено", {
+          "reply_markup": {
+          "keyboard": [["/Приятная цена", "/Новости"], ["/Доставка"], ["/Адреса","/Скрыть меню"]]
+          }
+        });
+  }
+});
+
+bot.command("hide", async (ctx) =>{
+  admins=JSON.parse(await getdb(admins_param));
+  if(admins.includes(ctx.from?.username)){
+        await ctx.reply("меню скрыто", {
+          "reply_markup": {
+            remove_keyboard: true
+          }
+        });
+  }
+});
 //-------------------------------------------------------------
 
 //---------------------user commands---------------------------
 bot.command("promo", async (ctx) =>{
 
       promotions=JSON.parse(await getdb(promo_param));
-      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n\n"));
+      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n\n"+promotions.join("\n\n"));
 });
 
 bot.command("news", async (ctx) =>{
 
       news=JSON.parse(await getdb(news_param));
-      await ctx.reply("Новости в PAR-RUS.RU: \n"+news.join("\n\n"));
+      await ctx.reply("Новости в PAR-RUS.RU: \n\n"+news.join("\n\n"));
 });
 
 bot.command("delivery", async (ctx) =>{
@@ -269,21 +291,6 @@ bot.command("adress", async (ctx) =>{
                       "3. Тыщенка: Проспект Ленина, 62, вход в Верный, налево на цоколь \n");;
 });
 
-bot.command("menu", async (ctx) =>{
-  await ctx.reply("меню включено", {
-    "reply_markup": {
-    "keyboard": [["/Приятная цена", "/Новости"], ["/Доставка"], ["/Адреса","/Скрыть меню"]]
-    }
-  });
-});
-
-bot.command("hide", async (ctx) =>{
-  await ctx.reply("меню скрыто", {
-    "reply_markup": {
-      remove_keyboard: true
-    }
-  });
-});
 //-------------------------------------------------------------
 
 // Handle the /effect command to apply text effects using an inline keyboard
@@ -448,10 +455,6 @@ bot.api.setMyCommands([
 const introductionMessage = `Привет! Я робот помощник PAR-RUS.RU.
 Я знаю о выгодных предложениях и последних новостях в PAR-RUS.RU,
 также погу помочь с доставкой и показать адреса магазинов.
-Чтобы показать меню напишите
-/menu
-чтобы убрать меню напишите
-/hide
 
 Команды
 /promo - выгодные предложения
@@ -487,14 +490,14 @@ bot.on("message", async (ctx) =>{
 
       if(ctx.message.text=="/Приятная цена"){
         promotions=JSON.parse(await getdb(promo_param));
-        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n\n"));
+        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n\n"+promotions.join("\n\n"));
         return;
       }
 
       if(ctx.message.text=="/Новости"){
 
             news=JSON.parse(await getdb(news_param));
-            await ctx.reply("Новости в PAR-RUS.RU: \n"+news.join("\n\n"));
+            await ctx.reply("Новости в PAR-RUS.RU: \n\n"+news.join("\n\n"));
             return;
       };
 
@@ -515,11 +518,11 @@ bot.on("message", async (ctx) =>{
       };
 
       if(ctx.message.text=="/Скрыть меню"){
-        await ctx.reply("меню скрыто", {
-          "reply_markup": {
-            remove_keyboard: true
-          }
-        });
+      //  await ctx.reply("меню скрыто", {
+      //    "reply_markup": {
+      //      remove_keyboard: true
+      //    }
+      //  });
         return;
       };
 
