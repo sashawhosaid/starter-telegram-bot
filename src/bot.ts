@@ -246,13 +246,13 @@ bot.command("adminhelp", async (ctx) =>{ //add promotion
 bot.command("promo", async (ctx) =>{
 
       promotions=JSON.parse(await getdb(promo_param));
-      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
+      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n\n"));
 });
 
 bot.command("news", async (ctx) =>{
 
       news=JSON.parse(await getdb(news_param));
-      await ctx.reply("Новости в PAR-RUS.RU: \n"+news.join("\n"));
+      await ctx.reply("Новости в PAR-RUS.RU: \n"+news.join("\n\n"));
 });
 
 bot.command("delivery", async (ctx) =>{
@@ -487,14 +487,14 @@ bot.on("message", async (ctx) =>{
 
       if(ctx.message.text=="/Приятная цена"){
         promotions=JSON.parse(await getdb(promo_param));
-        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n"));
+        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n"+promotions.join("\n\n"));
         return;
       }
 
       if(ctx.message.text=="/Новости"){
 
             news=JSON.parse(await getdb(news_param));
-            await ctx.reply("Новости в PAR-RUS.RU: \n"+news.join("\n"));
+            await ctx.reply("Новости в PAR-RUS.RU: \n"+news.join("\n\n"));
             return;
       };
 
