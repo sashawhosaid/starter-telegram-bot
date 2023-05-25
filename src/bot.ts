@@ -191,7 +191,7 @@ bot.command("ads", async (ctx) =>{ //add promotion
         //const milliseconds = time * 1000;
         const dateObject = new Date(time);
 
-        const humanDateFormat =dateObject.toLocaleDateString("ru");
+        const humanDateFormat =dateObject.toLocaleDateString();
 
         news.unshift(humanDateFormat+":"+ctx.match);
 
@@ -449,8 +449,10 @@ bot.api.setMyCommands([
 const introductionMessage = `Привет! Я робот помощник PAR-RUS.RU.
 Я знаю о выгодных предложениях и последних новостях в PAR-RUS.RU,
 также погу помочь с доставкой и показать адреса магазинов.
-Чтобы показать меню напишите /menu
-чтобы убрать меню напишите /hide
+Чтобы показать меню напишите
+/menu
+чтобы убрать меню напишите
+/hide
 
 Команды
 /promo - выгодные предложения
