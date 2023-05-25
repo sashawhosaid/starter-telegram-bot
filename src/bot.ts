@@ -272,7 +272,7 @@ bot.command("adress", async (ctx) =>{
 bot.command("menu", async (ctx) =>{
   await ctx.reply("меню включено", {
     "reply_markup": {
-    "keyboard": [["/Приятная цена", "/Новости"], ["/Доставка"], ["/Адреса"]]
+    "keyboard": [["/Приятная цена", "/Новости"], ["/Доставка"], ["/Адреса","/Скрыть меню"]]
     }
   });
 });
@@ -514,6 +514,14 @@ bot.on("message", async (ctx) =>{
             return;
       };
 
+      if(ctx.message.text=="/Скрыть меню"){
+        await ctx.reply("меню выключено", {
+          "reply_markup": {
+            remove_keyboard: true
+          }
+        });
+        return;
+      };
 
       msg=ctx.message.text;
       if (msg.toLowerCase().includes(price)||
