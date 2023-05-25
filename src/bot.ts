@@ -278,7 +278,7 @@ bot.command("menu", async (ctx) =>{
 });
 
 bot.command("hide", async (ctx) =>{
-  await ctx.reply("меню выключено", {
+  await ctx.reply("меню скрыто", {
     "reply_markup": {
       remove_keyboard: true
     }
@@ -515,7 +515,7 @@ bot.on("message", async (ctx) =>{
       };
 
       if(ctx.message.text=="/Скрыть меню"){
-        await ctx.reply("меню выключено", {
+        await ctx.reply("меню скрыто", {
           "reply_markup": {
             remove_keyboard: true
           }
