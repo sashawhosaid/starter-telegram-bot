@@ -453,15 +453,7 @@ bot.api.setMyCommands([
 
 // Handle all other messages and the /start command
 const introductionMessage = `Привет! Я робот помощник PAR-RUS.RU.
-Я знаю о выгодных предложениях и последних новостях в PAR-RUS.RU,
-также погу помочь с доставкой и показать адреса магазинов.
-
-Команды
-/promo - выгодные предложения
-/news - Новости и посдедние поступления
-/delivery - Доставка
-/adress - Адреса магазинов
-/help - Справка о боте` ;
+Чтобы увидеть доступные команды введите "/"` ;
 
 const replyWithIntro = (ctx: any) =>
   ctx.reply(introductionMessage, {
