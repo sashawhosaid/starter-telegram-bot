@@ -466,7 +466,10 @@ bot.command("help", replyWithIntro);
 
 //--------greeting 1st new member-----------------
 bot.on("msg:new_chat_members", async (ctx) =>{
-  await  ctx.reply("@"+ ctx.msg.new_chat_members[0].first_name +", "+introductionMessage);
+  await  ctx.reply("@"+ ctx.msg.new_chat_members[0].first_name +", "+introductionMessage,{
+    reply_markup: aboutUrlKeyboard,
+    parse_mode: "HTML",
+  } );
 });
 //------------------------------------------------
 
