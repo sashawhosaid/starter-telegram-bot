@@ -462,10 +462,10 @@ const replyWithIntro = (ctx: any) =>
     parse_mode: "HTML",
   });
 
-  bot.command("delall", async (ctx:any) =>{
+  bot.command("delall", async (ctx) =>{
       console.log("deleting command is recieved")
       await ctx.reply("trying to delete all i can");
-      await deleteAllMessages(ctx.message.chat.id, ctx.msg.message_id);
+      await deleteAllMessages(ctx.msg.chat.id, ctx.msg.message_id);
   });
 
   bot.command("start", replyWithIntro);
