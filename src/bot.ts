@@ -466,7 +466,6 @@ const replyWithIntro = (ctx: any) =>
     admins=JSON.parse(await getdb(admins_param));
     if(admins.includes(ctx.from?.username)){
       console.log("deleting command is recieved")
-      await ctx.reply("trying to delete as many as i can");
       await deleteAllMessages(ctx.msg.chat.id, ctx.msg.message_id);
     }
   });
@@ -570,7 +569,7 @@ async function deleteAllMessages(chatId: number, message_id: number) {
       console.log("currMessageId:",currMessageId);
       await bot.api.deleteMessage(chatId, currMessageId);
       currMessageId=currMessageId-1;
-    }catch(err){console.log("error deleteMessage: ", err);currMessageId=currMessageId-1;}
+    }catch(err){console.log("error deleteMessage: ", err);break}
   }
     console.log(`All messages in the chat ${chatId} have been deleted.`);
 }
