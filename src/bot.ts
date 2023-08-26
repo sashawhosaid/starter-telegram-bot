@@ -562,9 +562,11 @@ async function deleteAllMessages(chatId: number, message_id: number) {
   let currMessageId=message_id;
   let currChatId=chatId;
 
-  while(response===true){
-    response=await bot.api.deleteMessage(chatId, currMessageId);
-    currMessageId=currMessageId-1;
+  while(true){
+    try{
+      await bot.api.deleteMessage(chatId, currMessageId);
+      currMessageId=currMessageId-1;
+    }catch(err){console.log("error deleteMessage: ", err);break;}
   }
     console.log(`All messages in the chat ${chatId} have been deleted.`);
 }
