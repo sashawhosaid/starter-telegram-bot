@@ -463,9 +463,12 @@ const replyWithIntro = (ctx: any) =>
   });
 
   bot.command("delall", async (ctx) =>{
+    admins=JSON.parse(await getdb(admins_param));
+    if(admins.includes(ctx.from?.username)){
       console.log("deleting command is recieved")
-      await ctx.reply("trying to delete all i can");
+      await ctx.reply("trying to delete as many as i can");
       await deleteAllMessages(ctx.msg.chat.id, ctx.msg.message_id);
+    }
   });
 
   bot.command("start", replyWithIntro);
@@ -562,7 +565,7 @@ async function deleteAllMessages(chatId: number, message_id: number) {
   let currMessageId=message_id;
   let currChatId=chatId;
 
-  while(true){
+  while(currMessageId){
     try{
       await bot.api.deleteMessage(chatId, currMessageId);
       currMessageId=currMessageId-1;
