@@ -586,12 +586,8 @@ const middleware: Middleware<Context> = async (ctx, next) => {
 bot.use(middleware);
 //---------------------------------------------------------------
 bot.command("deleteallcmd", async (ctx) =>{
-  admins=JSON.parse(await getdb(admins_param)); //only admin can do this
-  if(admins.includes(ctx.from?.username)){
     await ctx.reply('trying to delete all i can');
     await deleteAllMessages(ctx.chat.id, ctx.msg.message_id);
-  }
-
 });
 
 // Start the server
