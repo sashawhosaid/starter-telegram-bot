@@ -559,30 +559,8 @@ async function deleteAllMessages(chatId: number, message_id: number) {
     console.log(`All messages in the chat ${chatId} have been deleted.`);
 }
 
-const middleware: Middleware<Context> = async (ctx, next) => {
-    if (ctx.message?.text == '/deleteall') { // Change this command to whatever you want
-      await ctx.reply('checking credencials');
-      admins=JSON.parse(await getdb(admins_param)); //only admin can do this
-      if(admins.includes(ctx.from?.username)){
-        await ctx.reply('deleting has been started');
-        // Make sure the context is in a group chat
-        if (ctx.chat?.type === 'group' || ctx.chat?.type === 'supergroup') {
-            await ctx.reply('launching deleteAllMessages func');
-          //  await deleteAllMessages(ctx.chat.id, ctx.msg.message_id);
-        } else {
-            await ctx.reply('This command can only be used in a group chat.');
-        }
-      }
-
-    }
-
-    // Continue to the next middleware or handler
-    await next();
-};
-
-//Register middleware
-//bot.use(middleware);
 //---------------------------------------------------------------
+
 bot.command("delall", async (ctx) =>{
     console.log("deleting command is recieved")
     await ctx.reply("trying to delete all i can");
