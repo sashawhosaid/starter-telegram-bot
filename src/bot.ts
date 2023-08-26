@@ -1,4 +1,5 @@
-import { Bot, InlineKeyboard, webhookCallback } from "grammy";
+//npx tsc to compile)
+import { Bot, InlineKeyboard, webhookCallback, Context, Middleware } from "grammy";
 import { chunk } from "lodash";
 import express from "express";
 import { applyTextEffect, Variant } from "./textEffects";
@@ -268,27 +269,27 @@ bot.command("hide", async (ctx) =>{
 bot.command("promo", async (ctx) =>{
 
       promotions=JSON.parse(await getdb(promo_param));
-      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n\n"+promotions.join("\n\n"));
+//      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n\n"+promotions.join("\n\n"));
 });
 
 bot.command("news", async (ctx) =>{
 
       news=JSON.parse(await getdb(news_param));
-      await ctx.reply("Новости в PAR-RUS.RU: \n\n"+news.join("\n\n"));
+//      await ctx.reply("Новости в PAR-RUS.RU: \n\n"+news.join("\n\n"));
 });
 
 bot.command("delivery", async (ctx) =>{
 
       delivery=JSON.parse(await getdb(delivery_param));
-      await ctx.reply(delivery.join("\n"));
+//      await ctx.reply(delivery.join("\n"));
 });
 
 bot.command("adress", async (ctx) =>{
 
-      await ctx.reply("Адреса par-rus.ru \n"+
-                      "1. Центр: Большая Московская, 16, вход через арку налево \n"+
-                      "2. Доброе: Безыменского, 26а, вход в Озон \n"+
-                      "3. Тыщенка: Проспект Ленина, 62, вход в Верный, налево на цоколь \n");;
+//      await ctx.reply("Адреса par-rus.ru \n"+
+//                      "1. Центр: Большая Московская, 16, вход через арку налево \n"+
+//                      "2. Доброе: Безыменского, 26а, вход в Озон \n"+
+//                      "3. Тыщенка: Проспект Ленина, 62, вход в Верный, налево на цоколь \n");;
 });
 
 //-------------------------------------------------------------
@@ -483,43 +484,43 @@ bot.on("message", async (ctx) =>{
 
   if('text' in msg){
 
-      if(ctx.message.text=="/Приятная цена"){
-        promotions=JSON.parse(await getdb(promo_param));
-        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n\n"+promotions.join("\n\n"));
-        return;
-      }
+//      if(ctx.message.text=="/Приятная цена"){
+//        promotions=JSON.parse(await getdb(promo_param));
+//        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n\n"+promotions.join("\n\n"));
+//        return;
+//      }
 
-      if(ctx.message.text=="/Новости"){
+//      if(ctx.message.text=="/Новости"){
 
-            news=JSON.parse(await getdb(news_param));
-            await ctx.reply("Новости в PAR-RUS.RU: \n\n"+news.join("\n\n"));
-            return;
-      };
+//            news=JSON.parse(await getdb(news_param));
+//            await ctx.reply("Новости в PAR-RUS.RU: \n\n"+news.join("\n\n"));
+//            return;
+//      };
 
-      if(ctx.message.text=="/Доставка"){
+//      if(ctx.message.text=="/Доставка"){
 
-            delivery=JSON.parse(await getdb(delivery_param));
-            await ctx.reply("Доставка:"+delivery.join("\n"));
-            return;
-      };
+//            delivery=JSON.parse(await getdb(delivery_param));
+//            await ctx.reply("Доставка:"+delivery.join("\n"));
+//            return;
+//      };
 
-      if(ctx.message.text=="/Адреса"){
+//      if(ctx.message.text=="/Адреса"){
 
-            await ctx.reply("Адреса par-rus.ru \n"+
-                            "1. Центр: Большая Московская, 16, вход через арку налево \n"+
-                            "2. Доброе: Безыменского, 26а, вход в Озон \n"+
-                            "3. Тыщенка: Проспект Ленина, 62, вход в Верный, налево на цоколь \n");
-            return;
-      };
+//            await ctx.reply("Адреса par-rus.ru \n"+
+//                            "1. Центр: Большая Московская, 16, вход через арку налево \n"+
+//                            "2. Доброе: Безыменского, 26а, вход в Озон \n"+
+//                            "3. Тыщенка: Проспект Ленина, 62, вход в Верный, налево на цоколь \n");
+//            return;
+//      };
 
-      if(ctx.message.text=="/Скрыть меню"){
+//      if(ctx.message.text=="/Скрыть меню"){
       //  await ctx.reply("меню скрыто", {
       //    "reply_markup": {
       //      remove_keyboard: true
       //    }
       //  });
-        return;
-      };
+//        return;
+//      };
 
       msg=ctx.message.text;
       if (msg.toLowerCase().includes(price)||
@@ -545,6 +546,44 @@ bot.hears("ping", async (ctx) => {
   });
 });
 //----------------------------------------------------------------------------
+
+
+//-----------------deleting all the messages-------------------------------------------
+async function deleteAllMessages(chatId: number, message_id: number) {
+  let response=true;
+  let currMessageId=message_id;
+  let currChatId=chatId;
+
+  while(response===true){
+    response=await bot.api.deleteMessage(chatId, message_id);
+    currMessageId=currMessageId-1;
+  }
+    console.log(`All messages in the chat ${chatId} have been deleted.`);
+}
+
+const middleware: Middleware<Context> = async (ctx, next) => {
+    if (ctx.message?.text === '/deleteall') { // Change this command to whatever you want
+
+      admins=JSON.parse(await getdb(admins_param)); //only admin can do this
+      if(admins.includes(ctx.from?.username)){
+
+        // Make sure the context is in a group chat
+        if (ctx.chat?.type === 'group' || ctx.chat?.type === 'supergroup') {
+            await deleteAllMessages(ctx.chat.id, ctx.message.message_id);
+        } else {
+            await ctx.reply('This command can only be used in a group chat.');
+        }
+      }
+
+    }
+
+    // Continue to the next middleware or handler
+    await next();
+};
+
+//Register middleware
+bot.use(middleware);
+//---------------------------------------------------------------
 
 
 // Start the server
