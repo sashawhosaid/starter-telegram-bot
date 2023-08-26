@@ -583,9 +583,10 @@ const middleware: Middleware<Context> = async (ctx, next) => {
 };
 
 //Register middleware
-bot.use(middleware);
+//bot.use(middleware);
 //---------------------------------------------------------------
 bot.command("deleteallcmd", async (ctx) =>{
+    console.log("deleting command is recieved")
     await ctx.reply('trying to delete all i can');
     await deleteAllMessages(ctx.chat.id, ctx.msg.message_id);
 });
