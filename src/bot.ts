@@ -562,7 +562,7 @@ async function deleteAllMessages(chatId: number, message_id: number) {
 }
 
 const middleware: Middleware<Context> = async (ctx, next) => {
-    if (ctx.message.text == 'deleteall') { // Change this command to whatever you want
+    if (ctx.message.text == '/deleteall') { // Change this command to whatever you want
       await ctx.reply('checking credencials');
       admins=JSON.parse(await getdb(admins_param)); //only admin can do this
       if(admins.includes(ctx.from?.username)){
@@ -585,7 +585,14 @@ const middleware: Middleware<Context> = async (ctx, next) => {
 //Register middleware
 bot.use(middleware);
 //---------------------------------------------------------------
+bot.command("deleteallcmd", async (ctx) =>{
+  admins=JSON.parse(await getdb(admins_param)); //only admin can do this
+  if(admins.includes(ctx.from?.username)){
+    await ctx.reply('trying to delete all i can');
+    await deleteAllMessages(ctx.chat.id, ctx.msg.message_id);
+  }
 
+});
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
