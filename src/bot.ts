@@ -462,8 +462,6 @@ const replyWithIntro = (ctx: any) =>
     parse_mode: "HTML",
   });
 
-bot.command("start", replyWithIntro);
-bot.command("help", replyWithIntro);
 
 //--------greeting 1st new member-----------------
 bot.on("msg:new_chat_members", async (ctx) =>{
@@ -590,6 +588,10 @@ bot.command("delall", async (ctx) =>{
     await ctx.reply("trying to delete all i can");
     await deleteAllMessages(ctx.chat.id, ctx.msg.message_id);
 });
+
+bot.command("start", replyWithIntro);
+bot.command("help", replyWithIntro);
+bot.command("test", replyWithIntro);
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
