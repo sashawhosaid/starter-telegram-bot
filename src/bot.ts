@@ -269,19 +269,19 @@ bot.command("hide", async (ctx) =>{
 bot.command("promo", async (ctx) =>{
 
       promotions=JSON.parse(await getdb(promo_param));
-//      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n\n"+promotions.join("\n\n"));
+      await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n\n"+promotions.join("\n\n"));
 });
 
 bot.command("news", async (ctx) =>{
 
       news=JSON.parse(await getdb(news_param));
-//      await ctx.reply("Новости в PAR-RUS.RU: \n\n"+news.join("\n\n"));
+      await ctx.reply("Новости в PAR-RUS.RU: \n\n"+news.join("\n\n"));
 });
 
 bot.command("delivery", async (ctx) =>{
 
       delivery=JSON.parse(await getdb(delivery_param));
-//      await ctx.reply(delivery.join("\n"));
+      await ctx.reply(delivery.join("\n"));
 });
 
 bot.command("adress", async (ctx) =>{
@@ -494,25 +494,25 @@ bot.on("message", async (ctx) =>{
 
   if('text' in msg){
 
-//      if(ctx.message.text=="/Приятная цена"){
-//        promotions=JSON.parse(await getdb(promo_param));
-//        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n\n"+promotions.join("\n\n"));
-//        return;
-//      }
+      if(ctx.message.text=="/Приятная цена"){
+        promotions=JSON.parse(await getdb(promo_param));
+        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n\n"+promotions.join("\n\n"));
+        return;
+      }
 
-//      if(ctx.message.text=="/Новости"){
+      if(ctx.message.text=="/Новости"){
 
-//            news=JSON.parse(await getdb(news_param));
-//            await ctx.reply("Новости в PAR-RUS.RU: \n\n"+news.join("\n\n"));
-//            return;
-//      };
+            news=JSON.parse(await getdb(news_param));
+            await ctx.reply("Новости в PAR-RUS.RU: \n\n"+news.join("\n\n"));
+            return;
+      };
 
-//      if(ctx.message.text=="/Доставка"){
+      if(ctx.message.text=="/Доставка"){
 
-//            delivery=JSON.parse(await getdb(delivery_param));
-//            await ctx.reply("Доставка:"+delivery.join("\n"));
-//            return;
-//      };
+            delivery=JSON.parse(await getdb(delivery_param));
+            await ctx.reply("Доставка:"+delivery.join("\n"));
+            return;
+      };
 
 //      if(ctx.message.text=="/Адреса"){
 
@@ -523,14 +523,14 @@ bot.on("message", async (ctx) =>{
 //            return;
 //      };
 
-//      if(ctx.message.text=="/Скрыть меню"){
-      //  await ctx.reply("меню скрыто", {
-      //    "reply_markup": {
-      //      remove_keyboard: true
-      //    }
-      //  });
-//        return;
-//      };
+      if(ctx.message.text=="/Скрыть меню"){
+        await ctx.reply("меню скрыто", {
+          "reply_markup": {
+            remove_keyboard: true
+          }
+        });
+        return;
+      };
 
       msg=ctx.message.text;
       if (msg.toLowerCase().includes(price)||
