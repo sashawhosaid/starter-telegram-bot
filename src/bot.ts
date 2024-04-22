@@ -542,11 +542,11 @@ bot.on("message", async (ctx) =>{
       const result= await inference.textClassification({
         inputs: msg
       })
+      console.log("result",result)
       result.forEach(async (Classification,index)=>{
         const {label,score}= Classification
         await ctx.reply(label)
       })
-      //await ctx.reply(answer);
 
       if (msg.toLowerCase().includes(price)||
           msg.toLowerCase().includes(price1)||
