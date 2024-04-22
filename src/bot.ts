@@ -541,11 +541,12 @@ bot.on("message", async (ctx) =>{
       //hugging face
         const inputs = {
           context: msg,
-          question: "how many fingers do joe have?"
+          question: "Сколько пальцев у джо"
         };
       const {answer}= await inference.questionAnswering({
         inputs: inputs
       })
+      await ctx.reply(answer)
       console.log("answer:",answer)
       //await ctx.reply(answer);
 
