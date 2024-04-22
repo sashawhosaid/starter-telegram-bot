@@ -540,7 +540,7 @@ bot.on("message", async (ctx) =>{
       msg=ctx.message.text;
       //hugging face
         const inputs = {
-          context: 'business, sales, client chat',
+          context: 'business',
           question: msg+`.questions for seqmentation: is it question how much is the price? if yes respond with price if no resnond with no. `
         };
       const {answer}= await inference.questionAnswering({
