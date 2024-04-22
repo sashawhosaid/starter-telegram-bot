@@ -541,7 +541,7 @@ bot.on("message", async (ctx) =>{
       //hugging face
         const inputs = {
           context: msg,
-          question: "is it question about avalaibility of the good in the store. Answer yes or no."
+          question: "how many fingers do joe have?"
         };
       const {answer}= await inference.questionAnswering({
         inputs: inputs
