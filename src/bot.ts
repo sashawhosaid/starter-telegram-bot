@@ -3,6 +3,7 @@ import { Bot, InlineKeyboard, webhookCallback, Context, Middleware } from "gramm
 import { chunk } from "lodash";
 import express from "express";
 import { applyTextEffect, Variant } from "./textEffects";
+import { HfInference } from "@huggingface/inference";
 //const CyclicDB = require('@cyclic.sh/dynamodb');
 //const db = CyclicDB(process.env.CYCLIC_DB);
 //var reply_to_user={reply_to_message_id: ctx.msg.message_id,};
@@ -12,6 +13,10 @@ const s3 = new AWS.S3();
 //------------------------------------
 
 import type { Variant as TextEffectVariant } from "./textEffects";
+
+//hugging face token
+const HF_TOKEN=process.env.HUGGING_FACE_TOKEN
+const inference = new HfInference(HF_TOKEN);
 
 // Create a bot using the Telegram token
 const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
@@ -494,25 +499,25 @@ bot.on("message", async (ctx) =>{
 
   if('text' in msg){
 
-      if(ctx.message.text=="/Приятная цена"){
-        promotions=JSON.parse(await getdb(promo_param));
-        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n\n"+promotions.join("\n\n"));
-        return;
-      }
+//      if(ctx.message.text=="/Приятная цена"){
+//        promotions=JSON.parse(await getdb(promo_param));
+//        await ctx.reply("Выгодные предложения от PAR-RUS.RU: \n\n"+promotions.join("\n\n"));
+//        return;
+//      }
 
-      if(ctx.message.text=="/Новости"){
+//      if(ctx.message.text=="/Новости"){
 
-            news=JSON.parse(await getdb(news_param));
-            await ctx.reply("Новости в PAR-RUS.RU: \n\n"+news.join("\n\n"));
-            return;
-      };
+//            news=JSON.parse(await getdb(news_param));
+//            await ctx.reply("Новости в PAR-RUS.RU: \n\n"+news.join("\n\n"));
+//            return;
+ //     };
 
-      if(ctx.message.text=="/Доставка"){
+//      if(ctx.message.text=="/Доставка"){
 
-            delivery=JSON.parse(await getdb(delivery_param));
-            await ctx.reply("Доставка:"+delivery.join("\n"));
-            return;
-      };
+//            delivery=JSON.parse(await getdb(delivery_param));
+//            await ctx.reply("Доставка:"+delivery.join("\n"));
+//            return;
+//      };
 
 //      if(ctx.message.text=="/Адреса"){
 
@@ -533,6 +538,17 @@ bot.on("message", async (ctx) =>{
       };
 
       msg=ctx.message.text;
+      //hugging face
+        const inputs = {
+          context: 'business, sales, client chat',
+          question: `.questions for seqmentation: is it question how much is the price? if yes respond with price. `
+        };
+      const {answer}= await inference.questionAnswering({
+        inputs: inputs
+      })
+      console.log("answer:",answer)
+      //await ctx.reply(answer);
+
       if (msg.toLowerCase().includes(price)||
           msg.toLowerCase().includes(price1)||
           msg.toLowerCase().includes(price2)||

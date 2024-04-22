@@ -14,6 +14,11 @@
   resolved "https://registry.npmjs.org/@grammyjs/types/-/types-2.9.1.tgz"
   integrity sha512-6x2Kj98wm3hcq3YQBhlGrYAuQJu3NAx4OmqnOvbBl/la0TIw/HRpu+AinMfkrgjvxR8KzL5hTWCHSXI6MqAj8Q==
 
+"@huggingface/inference@^2.6.7":
+  version "2.6.7"
+  resolved "https://registry.npmjs.org/@huggingface/inference/-/inference-2.6.7.tgz"
+  integrity sha512-vFBqvtU3LhxjufTs0jcRrDSc0nK+lah10bOgvlIn80lAH4JwMzHHPBQ4g4ECEdRD0PIt6EpTiidEZQq2sArb5Q==
+
 "@jridgewell/resolve-uri@^3.0.3":
   version "3.1.0"
   resolved "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.0.tgz"
