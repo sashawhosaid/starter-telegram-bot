@@ -539,13 +539,29 @@ bot.on("message", async (ctx) =>{
 
       msg=ctx.message.text;
       //hugging face
+      const transresult = await inference.translation({
+        model: 'utrobinmv/t5_translate_en_ru_zh_large_1024',
+        inputs: 'translate to en:'+ msg
+      })
+      let translated;
+      // Check if the result is an array or a single value
+      if (Array.isArray(transresult)) {
+        // If result is an array, concatenate all translations into a single string
+        const translatedText = transresult.map(translation => translation.join(' ')).join(' ');
+        translated = translatedText;
+      } else {
+        // If result is a single value, directly access the translation
+        translated =  transresult;
+      }
+      
+      ctx.reply("en:"+translated)
       const result= await inference.textClassification({
-        inputs: msg
+        inputs: translated
       })
       console.log("result",result)
       result.forEach(async (Classification,index)=>{
         const {label,score}= Classification
-        await ctx.reply(label)
+        await ctx.reply(label+" - "+score)
       })
 
       if (msg.toLowerCase().includes(price)||
