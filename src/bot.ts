@@ -539,15 +539,13 @@ bot.on("message", async (ctx) =>{
 
       msg=ctx.message.text;
       //hugging face
-        const inputs = {
-          context: msg,
-          question: "Сколько пальцев у джо"
-        };
-      const {answer}= await inference.questionAnswering({
-        inputs: inputs
+      const result= await inference.textClassification({
+        inputs: msg
       })
-      await ctx.reply(answer)
-      console.log("answer:",answer)
+      result.forEach(async (Classification,index)=>{
+        const {label,score}= Classification
+        await ctx.reply(label)
+      })
       //await ctx.reply(answer);
 
       if (msg.toLowerCase().includes(price)||
