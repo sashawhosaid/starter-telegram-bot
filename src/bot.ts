@@ -551,7 +551,7 @@ bot.on("message", async (ctx) =>{
         translated = transresult.join(' ');
       } else {
         // If result is a single value, directly access the translation
-        translated = transresult.toString(); // Convert to string if necessary
+        translated = transresult.translation_text;
       }
 
       ctx.reply("en:"+translated)
