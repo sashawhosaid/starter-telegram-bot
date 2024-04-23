@@ -567,10 +567,11 @@ bot.on("message", async (ctx) =>{
       let maxLabel:string='';
       result.forEach(async (Classification,index)=>{
         const {label,score}= Classification
-        const parsedScore :number = parseInt(score.toString(),10);
-        if (parsedScore>max){
-          max=parsedScore;
-          maxLabel=label;
+        await ctx.reply(Label+" "+ score)
+        //const parsedScore :number = parseInt(score.toString(),10);
+        //if (parsedScore>max){
+        //  max=parsedScore;
+        //  maxLabel=label;
         }
       })
       await ctx.reply(maxLabel+" - "+ (max*100) +' %')
