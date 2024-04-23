@@ -291,10 +291,10 @@ bot.command("delivery", async (ctx) =>{
 
 bot.command("adress", async (ctx) =>{
 
-      await ctx.reply("Адреса par-rus.ru \n"+
-                      "1. Центр: Большая Московская, 16, вход через арку налево \n"+
-                      "2. Доброе: Безыменского, 26а, вход в Озон \n"+
-                      "3. Тыщенка: Проспект Ленина, 62, вход в Верный, налево на цоколь \n");;
+//      await ctx.reply("Адреса par-rus.ru \n"+
+//                      "1. Центр: Большая Московская, 16, вход через арку налево \n"+
+//                      "2. Доброе: Безыменского, 26а, вход в Озон \n"+
+//                      "3. Тыщенка: Проспект Ленина, 62, вход в Верный, налево на цоколь \n");;
 });
 
 //-------------------------------------------------------------
@@ -538,8 +538,6 @@ bot.on("message", async (ctx) =>{
       };
 
       msg=ctx.message.text;
-      
-      
       //hugging face
       const transresult = await inference.translation({
         model: 'utrobinmv/t5_translate_en_ru_zh_large_1024',
@@ -558,8 +556,8 @@ bot.on("message", async (ctx) =>{
 
       ctx.reply("en:"+translated)
       const result= await inference.textClassification({
-        inputs: translated,
-        model: 'Falconsai/intent_classification'
+        inputs: msg,//translated
+        model: 'qanastek/XLMRoberta-Alexa-Intents-Classification'
       })
       console.log("result",result)
       result.forEach(async (Classification,index)=>{
@@ -567,15 +565,15 @@ bot.on("message", async (ctx) =>{
         await ctx.reply(label+" - "+score)
       })
 
-   //   if (msg.toLowerCase().includes(price)||
-   //       msg.toLowerCase().includes(price1)||
-   //       msg.toLowerCase().includes(price2)||
-   //       msg.toLowerCase().includes(price3)) {
-   //   await ctx.reply("Извините, но цены на товары вы можете узнать придя в один из наших магазинов",{
-   //     reply_markup: aboutUrlKeyboard,
-   //     parse_mode: "HTML",
-    //  });
-     // }
+      if (msg.toLowerCase().includes(price)||
+          msg.toLowerCase().includes(price1)||
+          msg.toLowerCase().includes(price2)||
+          msg.toLowerCase().includes(price3)) {
+      await ctx.reply("Извините, но цены на товары вы можете узнать придя в один из наших магазинов",{
+        reply_markup: aboutUrlKeyboard,
+        parse_mode: "HTML",
+      });
+      }
 
     if(ctx.message.text=="хуй")
      await  ctx.reply("с вами здесь и сейчас ваш бот Василий!");
