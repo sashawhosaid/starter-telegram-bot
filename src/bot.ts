@@ -559,13 +559,21 @@ bot.on("message", async (ctx) =>{
       ctx.reply("en:"+translated)
       const result= await inference.textClassification({
         inputs: translated,
-        model: 'Falconsai/intent_classification'
+        model: 'Zabihin/Symptom_to_Diagnosis'
       })
-      console.log("result",result)
+
+      
+      let max :number = 0;
+      let maxLabel:string='';
       result.forEach(async (Classification,index)=>{
         const {label,score}= Classification
-        await ctx.reply(label+" - "+score)
+        const parsedScore :number = parseInt(score.toString(),10);
+        if (parsedScore>max){
+          max=parsedScore;
+          maxLabel=label;
+        }
       })
+      await ctx.reply(maxLabel+" - "+ (max*100) +' %')
 
    //   if (msg.toLowerCase().includes(price)||
    //       msg.toLowerCase().includes(price1)||
