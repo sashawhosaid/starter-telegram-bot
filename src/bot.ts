@@ -543,17 +543,17 @@ bot.on("message", async (ctx) =>{
         model: 'utrobinmv/t5_translate_en_ru_zh_large_1024',
         inputs: 'translate to en:'+ msg
       })
-      let translated;
-      // Check if the result is an array or a single value
+
+      let translated :string;
+
       if (Array.isArray(transresult)) {
         // If result is an array, concatenate all translations into a single string
-        const translatedText = transresult.map(translation => translation.join(' ')).join(' ');
-        translated = translatedText;
+        translated = transresult.join(' ');
       } else {
         // If result is a single value, directly access the translation
-        translated =  transresult;
+        translated = transresult.toString(); // Convert to string if necessary
       }
-      
+
       ctx.reply("en:"+translated)
       const result= await inference.textClassification({
         inputs: translated
