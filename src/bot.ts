@@ -556,7 +556,7 @@ bot.on("message", async (ctx) =>{
         translated = transresult.translation_text;
       }
 
-      ctx.reply("en:"+translated)
+     // ctx.reply("en:"+translated)
       const result= await inference.textClassification({
         inputs: translated,
         model: 'Zabihin/Symptom_to_Diagnosis'
@@ -572,7 +572,28 @@ bot.on("message", async (ctx) =>{
           maxLabel=label;
         }
       })
-      await ctx.reply(maxLabel+" - "+ (max*100) +' %')
+
+      //await ctx.reply(maxLabel+" - "+ Math.round(max*100) +' %')
+      
+      //translating back
+      const toTranslate=maxLabel+" - "+ Math.round(max*100) +' %'
+      const transbackresult = await inference.translation({
+        model: 'utrobinmv/t5_translate_en_ru_zh_large_1024',
+        inputs: 'translate to ru:'+toTranslate
+      })
+
+      let translatedback :string;
+
+      if (Array.isArray(transbackresult)) {
+        // If result is an array, concatenate all translations into a single string
+        translatedback = transbackresult.join(' ');
+      } else {
+        // If result is a single value, directly access the translation
+        translatedback = transbackresult.translation_text;
+      }
+
+     ctx.reply("Диагноз:"+translatedback)
+
 
    //   if (msg.toLowerCase().includes(price)||
    //       msg.toLowerCase().includes(price1)||
