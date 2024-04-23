@@ -556,7 +556,8 @@ bot.on("message", async (ctx) =>{
 
       ctx.reply("en:"+translated)
       const result= await inference.textClassification({
-        inputs: translated
+        inputs: msg,//translated
+        model: 'qanastek/XLMRoberta-Alexa-Intents-Classification'
       })
       console.log("result",result)
       result.forEach(async (Classification,index)=>{
