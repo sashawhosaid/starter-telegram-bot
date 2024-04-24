@@ -562,8 +562,7 @@ bot.on("message", async (ctx) =>{
      const table: Record<string, string[]> = {
       "categories": ["delivery", "device availability", "store's addresses", "call request", "unclassified"],
       "question":   ["Can you make delivery", "is there that device available", "can i have your store adresses",
-                  "how can call you", " small talk" ],
-      "answer": ["1","2","3","4","5"]
+                  "how can call you", " small talk" ]
       };
 
       const inputconc = {query:translated, table}
