@@ -557,7 +557,7 @@ bot.on("message", async (ctx) =>{
         translated = transresult.translation_text;
       }
 
-     // ctx.reply("en:"+translated)
+     ctx.reply("en:"+translated)
 
      const table: Record<string, string[]> = {
       "Question": ["How much is the price", "Do you have in stock?", "Can you make a delivery?",
