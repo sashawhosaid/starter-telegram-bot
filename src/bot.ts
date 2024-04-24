@@ -560,8 +560,10 @@ bot.on("message", async (ctx) =>{
      // ctx.reply("en:"+translated)
 
      const table: Record<string, string[]> = {
-      "Question": ["How much is the price", "Do you have this device in stock?", "Can you make a devivery?","can i have adresses of your store ", "other", "how can i call you"],
-      "Answer":   ["Prices are available in the store", "Cheking availibility with the manager", "Regarding the law we do not do a delivery","here is the our stores adresses", "random conversation", "here is the number you can call directly to the store"]
+      "Question": ["How much is the price", "Do you have in stock?", "Can you make a delivery?",
+                    "can i have adresses of your store ", "other", "can i get your phone number"],
+      "Answer":   ["Prices are available in the store", "Cheking availibility with the manager", "Regarding the law we do not do a delivery",
+                  "here is the our stores adresses", "random conversation", "here is the number you can call directly to the store"]
       };
 
       const inputconc = {query:translated, table}
