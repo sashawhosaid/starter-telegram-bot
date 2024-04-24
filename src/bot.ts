@@ -551,7 +551,7 @@ bot.on("message", async (ctx) =>{
 
       if (Array.isArray(transresult)) {
         // If result is an array, concatenate all translations into a single string
-        translated = transresult[0].translation_text
+        translated = transresult.join(' ');
       } else {
         // If result is a single value, directly access the translation
         translated = transresult.translation_text;
