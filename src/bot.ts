@@ -18,6 +18,7 @@ import type { Variant as TextEffectVariant } from "./textEffects";
 const HF_TOKEN=process.env.HUGGING_FACE_TOKEN
 const inference = new HfInference(HF_TOKEN);
 
+
 // Create a bot using the Telegram token
 const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
 
@@ -540,7 +541,7 @@ bot.on("message", async (ctx) =>{
       msg=ctx.message.text;
       
       
-      //hugging face
+      //-------------hugging face----------------------------
       const transresult = await inference.translation({
         model: 'utrobinmv/t5_translate_en_ru_zh_large_1024',
         inputs: 'translate to en:'+ msg
@@ -557,29 +558,25 @@ bot.on("message", async (ctx) =>{
       }
 
      // ctx.reply("en:"+translated)
-      const result= await inference.textClassification({
-        inputs: translated,
-        model: 'Zabihin/Symptom_to_Diagnosis'
+
+     const table: Record<string, string[]> = {
+      "Question": ["How much is the price", "Do you have this device in stock?", "Can you make a devivery?"],
+      "Answer":   ["Prices are available in the store", "Cheking availibility with the manager", "Regarding the law we do not do a delivery"]
+      };
+
+      const inputconc = {query:translated, table}
+      const result= await inference.tableQuestionAnswering({
+        inputs: inputconc,
+        model: 'google/tapas-base-finetuned-wtq'
       })
 
       
-      let max :number = 0;
-      let maxLabel:string='';
-      result.forEach(async (Classification,index)=>{
-        const {label,score}= Classification
-        if (score>max){
-          max=score;
-          maxLabel=label;
-        }
-      })
-
-      //await ctx.reply(maxLabel+" - "+ Math.round(max*100) +' %')
+      await ctx.reply(result.answer)
       
       //translating back
-      const toTranslate=maxLabel+" - "+ Math.round(max*100) +' %'
       const transbackresult = await inference.translation({
         model: 'utrobinmv/t5_translate_en_ru_zh_large_1024',
-        inputs: 'translate to ru:'+toTranslate
+        inputs: result.answer
       })
 
       let translatedback :string;
@@ -593,7 +590,7 @@ bot.on("message", async (ctx) =>{
       }
 
      ctx.reply("Диагноз:"+translatedback)
-
+//-----------------end of hugging face--------------------------------------
 
    //   if (msg.toLowerCase().includes(price)||
    //       msg.toLowerCase().includes(price1)||
