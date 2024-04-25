@@ -581,8 +581,8 @@ bot.on("message", async (ctx) =>{
     const arg ="promt:"+ translated;
   
     const result= await inference.textGeneration({
-      inputs: arg,
-      model: 'Alibaba-NLP/gte-Qwen1.5-7B-instruct'
+        inputs: arg,
+        model: 'Alibaba-NLP/gte-Qwen1.5-7B-instruct'
     })
       
       await ctx.reply(result.generated_text)
