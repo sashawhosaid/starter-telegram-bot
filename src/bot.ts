@@ -581,11 +581,15 @@ bot.on("message", async (ctx) =>{
         inputs: result.answer
       })
 
-      let translatedback :string;
+      let translatedback :string='no transated text';
 
       if (Array.isArray(transbackresult)) {
-        // If result is an array, concatenate all translations into a single string
-        translatedback = transbackresult.join(' ');
+        for (const item of transbackresult) {
+          if (item.translation_text !== '') {
+              translatedback = item.translation_text;
+              break; // Stop looping once a non-empty element is found
+          }
+        }
       } else {
         // If result is a single value, directly access the translation
         translatedback = transbackresult.translation_text;
