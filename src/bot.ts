@@ -564,8 +564,8 @@ bot.on("message", async (ctx) =>{
         translated = transresult.translation_text;
       }
 
-     ctx.reply("en:"+translated)
-
+     //ctx.reply("en:"+translated)
+      console.log("en:"+translated)
      const table: Record<string, string[]> = {
       "Device": ["Vaporesso xros", "Vaporesso xros mini", "Vaporesso xros pro"],
       "Cartridge": ["xros 0.6-0.8", "Xros 0.8", "Xros 0.4-0.8"]
