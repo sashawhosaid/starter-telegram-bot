@@ -642,7 +642,7 @@ if (process.env.NODE_ENV === "production") {
   // Use Webhooks for the production server
   const app = express();
   app.use(express.json());
-  //app.use(webhookCallback(bot, "express"));
+  app.use(webhookCallback(bot, "express"));
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Bot listening on port ${PORT}`);
