@@ -542,22 +542,18 @@ bot.on("message", async (ctx) =>{
       
       
       //-------------hugging face----------------------------
-      /*
+      
       const transresult = await inference.translation({
-        model: 'Helsinki-NLP/opus-mt-ru-en',
-        inputs: msg
+        model: 'utrobinmv/t5_translate_en_ru_zh_large_1024',
+        inputs: 'translate to en: '+msg
       })
 
       let translated :string="no translated text";
 
       if (Array.isArray(transresult)) {
         // If result is an array, concatenate all translations into a single string
-        for (const item of transresult) {
-          if (item.translation_text !== '') {
-              translated = item.translation_text;
-              break; // Stop looping once a non-empty element is found
-          }
-        }
+        translated = transresult.join(' ');
+        
       } else {
         // If result is a single value, directly access the translation
         translated = transresult.translation_text;
@@ -577,12 +573,12 @@ bot.on("message", async (ctx) =>{
       })
 
       
-      await ctx.reply(result.answer)*/
+      await ctx.reply(result.answer)
      /* 
       //translating back
       const transbackresult = await inference.translation({
         model: 'utrobinmv/t5_translate_en_ru_zh_large_1024',
-        inputs: result.answer
+        inputs: 'translate to ru: '+result.answer
       })
 
       let translatedback :string;
