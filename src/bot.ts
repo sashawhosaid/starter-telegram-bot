@@ -542,7 +542,7 @@ bot.on("message", async (ctx) =>{
       
       
       //-------------hugging face----------------------------
-      
+      /*
       const transresult = await inference.translation({
         model: 'utrobinmv/t5_translate_en_ru_zh_large_1024',
         inputs: 'translate to en: '+msg
@@ -552,8 +552,14 @@ bot.on("message", async (ctx) =>{
 
       if (Array.isArray(transresult)) {
         // If result is an array, concatenate all translations into a single string
-        translated = transresult.join(' ');
-        
+        for(res in transresult)
+        {
+          if(res.translations_text!==''){
+            translated=res.translations_text
+            break;
+          }
+        }
+    
       } else {
         // If result is a single value, directly access the translation
         translated = transresult.translation_text;
@@ -573,7 +579,7 @@ bot.on("message", async (ctx) =>{
       })
 
       
-      await ctx.reply(result.answer)
+      await ctx.reply(result.answer)*/
      /* 
       //translating back
       const transbackresult = await inference.translation({
