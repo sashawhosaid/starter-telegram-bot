@@ -542,7 +542,7 @@ bot.on("message", async (ctx) =>{
       
       
      //-------------hugging face----------------------------
-      const transresult = await inference.translation({
+  /*    const transresult = await inference.translation({
         model: 'utrobinmv/t5_translate_en_ru_zh_large_1024',
         inputs: 'translate to en: '+msg
       })
@@ -565,7 +565,7 @@ bot.on("message", async (ctx) =>{
       }
 
      //ctx.reply("en:"+translated)
-      console.log("en:"+translated)
+      console.log("en:"+translated)*/
      /*
       const table: Record<string, string[]> = {
       "Device": ["Vaporesso xros", "Vaporesso xros mini", "Vaporesso xros pro"],
@@ -578,14 +578,14 @@ bot.on("message", async (ctx) =>{
         model: 'google/tapas-base-finetuned-wtq'
       })
 */
-    const arg ="promt:"+ translated;
+ /*   const arg ="promt:"+ translated;
   
     const result= await inference.textGeneration({
         inputs: arg,
         model: 'Alibaba-NLP/gte-Qwen1.5-7B-instruct'
     })
       
-      await ctx.reply(result.generated_text)
+      await ctx.reply(result.generated_text)*/
      /* 
       //translating back
       const transbackresult = await inference.translation({
