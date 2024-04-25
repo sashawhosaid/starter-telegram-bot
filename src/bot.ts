@@ -566,7 +566,8 @@ bot.on("message", async (ctx) =>{
 
      //ctx.reply("en:"+translated)
       console.log("en:"+translated)
-     const table: Record<string, string[]> = {
+     /*
+      const table: Record<string, string[]> = {
       "Device": ["Vaporesso xros", "Vaporesso xros mini", "Vaporesso xros pro"],
       "Cartridge": ["xros 0.6-0.8", "Xros 0.8", "Xros 0.4-0.8"]
       };
@@ -576,9 +577,15 @@ bot.on("message", async (ctx) =>{
         inputs: inputconc,
         model: 'google/tapas-base-finetuned-wtq'
       })
-
+*/
+    const arg ="promt:"+ translated;
+  
+    const result= await inference.textGeneration({
+      inputs: arg,
+      model: 'Alibaba-NLP/gte-Qwen1.5-7B-instruct'
+    })
       
-      await ctx.reply(result.answer)
+      await ctx.reply(result.generated_text)
      /* 
       //translating back
       const transbackresult = await inference.translation({
