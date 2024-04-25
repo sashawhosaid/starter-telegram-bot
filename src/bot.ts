@@ -581,12 +581,12 @@ bot.on("message", async (ctx) =>{
 */
     const arg ="promt:"+ translated;
   
- /*   const result= await inference.textGeneration({
+    const result= await inference.textGeneration({
         inputs: arg,
         model: 'microsoft/Phi-3-mini-128k-instruct'
     })
       
-      await ctx.reply(result.generated_text)*/
+      await ctx.reply(result.generated_text)
      /* 
       //translating back
       const transbackresult = await inference.translation({
