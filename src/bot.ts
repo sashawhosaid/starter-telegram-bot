@@ -566,10 +566,8 @@ bot.on("message", async (ctx) =>{
      ctx.reply("en:"+translated)
 
      const table: Record<string, string[]> = {
-      "categories": ["delivery", "device availability","color availability", "store's addresses", "call request", "unclassified", "warranty","price"],
-      "question":   ["We can not make delivery", "we will check availability in a minute", "we will check color availability in a minute",
-                  "here is our store adresses", "here is our phone numbers", "i can not recoqnize your request", 
-                  "warranty is 2 weeks", "prices are not allowed in this chat" ]
+      "Device": ["Vaporesso xros", "Vaporesso xros mini", "Vaporesso xros pro"],
+      "Cartridge": ["xros 0.6-0.8", "Xros 0.8", "Xros 0.4-0.8"]
       };
 
       const inputconc = {query:translated, table}
