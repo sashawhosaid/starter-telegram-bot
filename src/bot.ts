@@ -541,7 +541,8 @@ bot.on("message", async (ctx) =>{
       msg=ctx.message.text;
       
       
-      //-------------hugging face----------------------------
+     //-------------hugging face----------------------------
+    if( ctx.message && ctx.message.text && ctx.message.text.includes("/") ){
       const transresult = await inference.translation({
         model: 'utrobinmv/t5_translate_en_ru_zh_large_1024',
         inputs: 'translate to en: '+msg
@@ -597,6 +598,7 @@ bot.on("message", async (ctx) =>{
       }
 
      ctx.reply(translatedback)*/
+  }
 //-----------------end of hugging face--------------------------------------
 
    //   if (msg.toLowerCase().includes(price)||
