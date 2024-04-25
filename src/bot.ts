@@ -579,14 +579,14 @@ bot.on("message", async (ctx) =>{
         model: 'google/tapas-base-finetuned-wtq'
       })
 */
-    const arg ="promt:"+ translated;
+/*    const arg ="promt:"+ translated;
   
     const result= await inference.textGeneration({
         inputs: arg,
         model: 'meta-llama/Meta-Llama-Guard-2-8B'
     })
       
-      await ctx.reply(result.generated_text)
+      await ctx.reply(result.generated_text)*/
      /* 
       //translating back
       const transbackresult = await inference.translation({
