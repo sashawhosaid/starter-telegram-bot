@@ -574,7 +574,7 @@ bot.on("message", async (ctx) =>{
       const inputconc = {query:translated, table}
       const result= await inference.tableQuestionAnswering({
         inputs: inputconc,
-        model: 'google/tapas-base-finetuned-sqa'
+        model: 'google/tapas-base-finetuned-wtq'
       })
 
       
