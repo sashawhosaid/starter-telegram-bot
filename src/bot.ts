@@ -539,7 +539,7 @@ bot.on("message", async (ctx) =>{
       };
 
       msg=ctx.message.text;
-   /*   
+      
       
       //-------------hugging face----------------------------
       const transresult = await inference.translation({
@@ -593,7 +593,7 @@ bot.on("message", async (ctx) =>{
 
      ctx.reply(translatedback)
 //-----------------end of hugging face--------------------------------------
-*/
+
    //   if (msg.toLowerCase().includes(price)||
    //       msg.toLowerCase().includes(price1)||
    //       msg.toLowerCase().includes(price2)||
