@@ -579,7 +579,7 @@ bot.on("message", async (ctx) =>{
 
       
       await ctx.reply(result.answer)
-      
+     /* 
       //translating back
       const transbackresult = await inference.translation({
         model: 'utrobinmv/t5_translate_en_ru_zh_large_1024',
@@ -596,7 +596,7 @@ bot.on("message", async (ctx) =>{
         translatedback = transbackresult.translation_text;
       }
 
-     ctx.reply(translatedback)
+     ctx.reply(translatedback)*/
 //-----------------end of hugging face--------------------------------------
 
    //   if (msg.toLowerCase().includes(price)||
