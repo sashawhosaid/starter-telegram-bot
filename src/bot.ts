@@ -542,7 +542,7 @@ bot.on("message", async (ctx) =>{
       
       
       //-------------hugging face----------------------------
-      
+      /*
       const transresult = await inference.translation({
         model: 'Helsinki-NLP/opus-mt-ru-en',
         inputs: msg
@@ -577,7 +577,7 @@ bot.on("message", async (ctx) =>{
       })
 
       
-      await ctx.reply(result.answer)
+      await ctx.reply(result.answer)*/
      /* 
       //translating back
       const transbackresult = await inference.translation({
