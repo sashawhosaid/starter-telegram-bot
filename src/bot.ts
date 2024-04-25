@@ -583,7 +583,8 @@ bot.on("message", async (ctx) =>{
   
     const result= await inference.textGeneration({
         inputs: arg,
-        model: 'microsoft/Phi-3-mini-128k-instruct'
+        model: 'microsoft/Phi-3-mini-128k-instruct',
+        options: 'trust_remote_code=True'
     })
       
       await ctx.reply(result.generated_text)
