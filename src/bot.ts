@@ -583,7 +583,7 @@ bot.on("message", async (ctx) =>{
   
     const result= await inference.textGeneration({
         inputs: arg,
-        model: 'meta-llama/Meta-Llama-Guard-2-8B'
+        model: 'microsoft/Phi-3-mini-128k-instruct'
     })
       
       await ctx.reply(result.generated_text)
