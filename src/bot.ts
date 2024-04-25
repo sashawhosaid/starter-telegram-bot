@@ -542,7 +542,7 @@ bot.on("message", async (ctx) =>{
       
       
       //-------------hugging face----------------------------
-      
+      /*
       const transresult = await inference.translation({
         model: 'utrobinmv/t5_translate_en_ru_zh_large_1024',
         inputs: 'translate to en:'+ msg
@@ -579,7 +579,7 @@ bot.on("message", async (ctx) =>{
       })
 
       
-      await ctx.reply(result.answer)
+      await ctx.reply(result.answer)*/
      /* 
       //translating back
       const transbackresult = await inference.translation({
