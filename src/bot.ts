@@ -547,11 +547,16 @@ bot.on("message", async (ctx) =>{
         inputs: 'translate to en:'+ msg
       })
 
-      let translated :string;
+      let translated :string="no translated text";
 
       if (Array.isArray(transresult)) {
         // If result is an array, concatenate all translations into a single string
-        translated = transresult.join(' ');
+        for (const item of transresult) {
+          if (item.translation_text !== '') {
+              translated = item.translation_text;
+              break; // Stop looping once a non-empty element is found
+          }
+        }
       } else {
         // If result is a single value, directly access the translation
         translated = transresult.translation_text;
@@ -581,15 +586,11 @@ bot.on("message", async (ctx) =>{
         inputs: result.answer
       })
 
-      let translatedback :string='no transated text';
+      let translatedback :string;
 
       if (Array.isArray(transbackresult)) {
-        for (const item of transbackresult) {
-          if (item.translation_text !== '') {
-              translatedback = item.translation_text;
-              break; // Stop looping once a non-empty element is found
-          }
-        }
+        // If result is an array, concatenate all translations into a single string
+        translatedback = transbackresult.join(' ');
       } else {
         // If result is a single value, directly access the translation
         translatedback = transbackresult.translation_text;
