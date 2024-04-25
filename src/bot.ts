@@ -5,7 +5,6 @@ import express from "express";
 import { applyTextEffect, Variant } from "./textEffects";
 import { HfInference } from "@huggingface/inference";
 import 'dotenv/config';
-console.log(process.env)
 //const CyclicDB = require('@cyclic.sh/dynamodb');
 //const db = CyclicDB(process.env.CYCLIC_DB);
 //var reply_to_user={reply_to_message_id: ctx.msg.message_id,};
@@ -584,7 +583,7 @@ bot.on("message", async (ctx) =>{
   
     const result= await inference.textGeneration({
         inputs: arg,
-        model: 'meta-llama/Meta-Llama-3-8B'
+        model: 'meta-llama/Meta-Llama-Guard-2-8B'
     })
       
       await ctx.reply(result.generated_text)
