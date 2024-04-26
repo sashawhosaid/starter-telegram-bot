@@ -580,10 +580,10 @@ bot.on("message", async (ctx) =>{
       })
 */
     const arg ="promt:"+ translated;
-  
+
     const result= await inference.textGeneration({
         inputs: arg,
-        model: 'Snowflake/snowflake-arctic-instruct',
+        model: 'OpenGVLab/InternVL-Chat-V1-5',
         options: {
           trustRemoteCode:true,   
         },
