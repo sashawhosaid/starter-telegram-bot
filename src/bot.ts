@@ -579,7 +579,7 @@ bot.on("message", async (ctx) =>{
         model: 'google/tapas-base-finetuned-wtq'
       })
 */
-    const arg ="promt:"+ translated;
+ /*   const arg ="promt:"+ translated;
   
     const result= await inference.textGeneration({
         inputs: arg,
@@ -588,8 +588,8 @@ bot.on("message", async (ctx) =>{
           trust_remote_code:true,   
         },
     });
-      
-      await ctx.reply(result.generated_text)
+   
+      await ctx.reply(result.generated_text)*/
      /* 
       //translating back
       const transbackresult = await inference.translation({
