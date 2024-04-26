@@ -583,7 +583,7 @@ bot.on("message", async (ctx) =>{
   
     const result= await inference.textGeneration({
         inputs: arg,
-        model: 'microsoft/Phi-3-mini-128k-instruct',
+        model: 'Snowflake/snowflake-arctic-instruct',
         options: {
           trustRemoteCode:true,   
         },
